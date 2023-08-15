@@ -28,7 +28,7 @@ const AnalyticCard = ({ color, title, count, percentage, isLoss, extra }: Analyt
       </Typography>
       <Grid container alignItems="center">
         <Grid item>
-          <Typography variant="h4" color="inherit">
+          <Typography variant="h5" color="" style={{ fontWeight: 'bolder' }}>
             {count}
           </Typography>
         </Grid>

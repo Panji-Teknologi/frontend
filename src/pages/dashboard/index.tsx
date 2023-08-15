@@ -1,4 +1,3 @@
-import { useState } from 'react';
 
 // material-ui
 import { Grid, Typography } from '@mui/material';
@@ -10,7 +9,7 @@ import AnalyticCard from '../../components/cards/statistics/AnalyticCard';
 
 const Dashboard = () => {
     return (
-        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
+        <Grid container spacing={2.5} pb={5}>
             {/* row 1 */}
             <Grid item xs={12} sx={{ mb: -2.25 }}>
                 <Typography variant="h5">Dashboard</Typography>
