@@ -14,13 +14,15 @@ import Breadcrumbs from '../../components/@extended/Breadcrumbs';
 
 // types
 import { openDrawer } from '../../store/reducers/menu';
+import Bottommenu from './BottomMenu';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
-  const dispatch = useDispatch();
+  const matchDownXS = useMediaQuery(theme.breakpoints.down(512));
 
   const { drawerOpen } = useSelector((state: any) => state.menu);
 
@@ -47,12 +49,13 @@ const MainLayout = () => {
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
       <Header open={open} handleDrawerToggle={handleDrawerToggle} />
-      <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
+      {!matchDownXS && <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />}
       <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
         <Toolbar />
         <Breadcrumbs navigation={navigation} title />
         <Outlet />
       </Box>
+      {matchDownXS && <Bottommenu />}
     </Box>
   );
 };

@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material"
 const History = () => {
     return (
         <Box>
-            <Typography variant="h5">Hostory</Typography>
+            <Typography variant="h5">History</Typography>
         </Box>
     )
 }
