@@ -6,7 +6,7 @@ import routes from "./routes";
 
 function App() {
 
-  const Routes = useRoutes(routes(true));
+  const Routes = useRoutes(routes(false));
 
   return (
     <ThemeProvider>

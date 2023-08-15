@@ -1,117 +1,187 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
+import { useState } from "react";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
+import { Link } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import logo from "../../../assets/images/logo.png";
+import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
+import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import HomeIcon from "@mui/icons-material/Home";
+import ContactsIcon from "@mui/icons-material/Contacts";
+import { Container } from "@mui/system";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  styled,
+  Theme,
+} from "@mui/material";
+import logoImg from "../../../assets/images/logo.png";
+import CustomButton from "../../../components/CustomButton/CustomButton";
 
-interface Props {
-  window?: () => Window;
-}
+const DrawerAppBar: React.FC = () => {
+  const [mobileMenu, setMobileMenu] = useState<{
+    left: boolean;
+  }>({
+    left: false,
+  });
 
-const drawerWidth = 240;
-const navItems = ["Home", "About", "Contact", "Test"];
+  const toggleDrawer =
+    (anchor: string, open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent): void => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
 
-export default function DrawerAppBar(props: Props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+      setMobileMenu({ ...mobileMenu, [anchor]: open });
+    };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
-  };
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      {/* <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
-      </Typography> */}
-      <img src={logo} alt="Hero Associate Mangement" style={{ height: 30 }} />
-      <Divider />
+  const list = (anchor: string) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {["Home", "Features", "Services", "Listed", "Contact"].map(
+          (text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index === 0 && <HomeIcon />}
+                  {index === 1 && <FeaturedPlayListIcon />}
+                  {index === 2 && <MiscellaneousServicesIcon />}
+                  {index === 3 && <ListAltIcon />}
+                  {index === 4 && <ContactsIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
     </Box>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const NavLink = styled(Typography)(({ theme }: { theme: Theme }) => ({
+    fontSize: "14px",
+    color: "#33334d",
+    fontWeight: "bold",
+    cursor: "pointer",
+    "&:hover": {
+      color: "orange",
+    },
+  }));
+
+  const NavbarLinksBox = styled(Box)(({ theme }: { theme: Theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: theme.spacing(3),
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  }));
+
+  const CustomMenuIcon = styled(MenuIcon)(({ theme }: { theme: Theme }) => ({
+    cursor: "pointer",
+    display: "none",
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      display: "block",
+    },
+  }));
+
+  const NavbarContainer = styled(Container)(({ theme }: { theme: Theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: theme.spacing(4),
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(2),
+    },
+  }));
+
+  const NavbarLogo = styled("img")(({ theme }: { theme: Theme }) => ({
+    cursor: "pointer",
+    height: 70,
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  }));
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+    // <Box sx={{ display: "flex" }}>
+    //   <CssBaseline />
+    //   <AppBar component="nav" color="transparent" sx={{ boxShadow: "none" }}>
+    //     <Toolbar>
+    <NavbarContainer>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "2.5rem",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <CustomMenuIcon onClick={toggleDrawer("left", true)} />
+          <Drawer
+            anchor="left"
+            open={mobileMenu["left"]}
+            onClose={toggleDrawer("left", false)}
           >
-            <MenuIcon />
-          </IconButton>
-          {/* <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            MUI
-          </Typography> */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-            <img
-              src={logo}
-              alt="Hero Associate Mangement"
-              style={{ height: 30 }}
-            />
-          </Box>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                {item}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Box component="nav">
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
+            {list("left")}
+          </Drawer>
+          <NavbarLogo src={logoImg} alt="logo" />
+        </Box>
+
+        <NavbarLinksBox>
+          <NavLink variant="body2">Home</NavLink>
+          <NavLink variant="body2">Features</NavLink>
+          <NavLink variant="body2">Services</NavLink>
+          <NavLink variant="body2">Listed</NavLink>
+          <NavLink variant="body2">Contact</NavLink>
+        </NavbarLinksBox>
       </Box>
 
-      <Box component="main" sx={{ p: 2 }}>
-        <Toolbar />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "1rem",
+        }}
+      >
+        <Link href="/login">
+          <NavLink variant="body2">Login</NavLink>
+        </Link>
+
+        <Link href="/register">
+          <CustomButton
+            backgroundColor="#ff6600"
+            color="#fff"
+            buttonText="Sign Up"
+          />
+        </Link>
       </Box>
-    </Box>
+    </NavbarContainer>
+    //     </Toolbar>
+    //   </AppBar>
+
+    //   <Box component="main">
+    //     <Toolbar />
+    //   </Box>
+    // </Box>
   );
-}
+};
+
+export default DrawerAppBar;
