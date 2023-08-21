@@ -25,7 +25,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     fontSize: "14px",
     cursor: "pointer",
     padding: "0.5rem 1.25rem",
-    borderRadius: "7px",
+    borderRadius: "50px",
     textTransform: "none",
     display: "block",
     border: "2px solid transparent",
