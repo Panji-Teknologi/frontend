@@ -22,7 +22,7 @@ import {
 import logoImg from "../../../assets/images/logo.png";
 import CustomButton from "../../../components/CustomButton/CustomButton";
 
-const DrawerAppBar: React.FC = () => {
+const DrawerAppBar = () => {
   const [mobileMenu, setMobileMenu] = useState<{
     left: boolean;
   }>({

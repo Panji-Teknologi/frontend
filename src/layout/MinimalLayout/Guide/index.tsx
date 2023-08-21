@@ -7,7 +7,7 @@ import {
   faPeopleGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Guide: React.FC = () => {
+const Guide = () => {
   const CustomBoxGuide = styled(Box)(({ theme }: { theme: Theme }) => ({
     width: "65%",
     [theme.breakpoints.down("md")]: {

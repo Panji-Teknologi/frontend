@@ -5,7 +5,7 @@ import twitterIcon from "../../../assets/images/twittericon.png";
 import linkedinIcon from "../../../assets/images/linkedinicon.png";
 import logoImg from "../../../assets/images/logo.png";
 
-const Footer: React.FC = () => {
+const Footer = () => {
   const CustomContainer = styled(Container)(({ theme }: { theme: Theme }) => ({
     display: "flex",
     justifyContent: "space-between",
