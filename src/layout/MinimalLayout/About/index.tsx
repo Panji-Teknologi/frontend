@@ -35,7 +35,30 @@ const About: React.FC = () => {
       fontSize: "26px",
     },
     [theme.breakpoints.down("sm")]: {
-      fontSize: "18px",
+      fontSize: "16px",
+    },
+  }));
+
+  const Desc = styled(Typography)(({ theme }) => ({
+    fontSize: "18px",
+    color: "#5A6473",
+    margin: theme.spacing(4, 0, 4, 0),
+    [theme.breakpoints.down("md")]: {
+      fontSize: "16px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "14px",
+    },
+  }));
+
+  const TitlePaper = styled(Typography)(({ theme }) => ({
+    fontSize: "16px",
+    color: "#5A6473",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "14px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "12px",
     },
   }));
 
@@ -59,35 +82,22 @@ const About: React.FC = () => {
               <Title variant="h3" sx={{ mt: 10 }}>
                 We believe in Long Term Partnership.
               </Title>
-              <Typography
-                variant="body2"
-                sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
-              >
+              <Desc variant="body2" sx={{ my: 4 }}>
                 Lorem ipsum dolor sit amet consectetur adipiscing elit primis
                 rutrum, nullam tempor malesuada laoreet tempus blandit pretium
                 etc.
-              </Typography>
+              </Desc>
 
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                className="nav nav-tabs nav-fill"
-                role="tablist"
-              >
+              <Tabs value={tabValue} onChange={handleTabChange} role="tablist">
                 <Tab
                   label={
-                    <Box sx={{ display: "flex" }}>
+                    <Box sx={{ display: "flex", backgroundColor: "" }}>
                       <Badge
                         badgeContent={1}
                         color="primary"
                         sx={{ marginTop: 1.5, mx: 2 }}
                       ></Badge>
-                      <Typography
-                        variant="body2"
-                        sx={{ fontSize: "16px", color: "#5A6473" }}
-                      >
-                        Experience
-                      </Typography>
+                      <TitlePaper variant="body2">Experience</TitlePaper>
                     </Box>
                   }
                   value={0}
@@ -100,12 +110,7 @@ const About: React.FC = () => {
                         color="primary"
                         sx={{ marginTop: 1.5, mx: 2 }}
                       ></Badge>
-                      <Typography
-                        variant="body2"
-                        sx={{ fontSize: "16px", color: "#5A6473" }}
-                      >
-                        Flexibility
-                      </Typography>
+                      <TitlePaper variant="body2">Flexibility</TitlePaper>
                     </Box>
                   }
                   value={1}
@@ -118,12 +123,7 @@ const About: React.FC = () => {
                         color="primary"
                         sx={{ marginTop: 1.5, mx: 2 }}
                       ></Badge>
-                      <Typography
-                        variant="body2"
-                        sx={{ fontSize: "16px", color: "#5A6473" }}
-                      >
-                        Result
-                      </Typography>
+                      <TitlePaper variant="body2">Result</TitlePaper>
                     </Box>
                   }
                   value={2}
@@ -131,13 +131,13 @@ const About: React.FC = () => {
               </Tabs>
 
               <Paper
-                sx={{ padding: 3, borderTop: 0 }}
+                sx={{ padding: 3, borderTop: 0, width: "100%" }}
                 elevation={3}
                 className="tab-content border border-top-0 text-secondary p-30"
                 id="myTabContent"
               >
                 <TabPanel value={tabValue} index={0}>
-                  <Typography
+                  <Desc
                     variant="body1"
                     sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
                   >
@@ -146,7 +146,7 @@ const About: React.FC = () => {
                     blandit pretium etc. Curabitur vehicula auctor ornare. Nulla
                     non ullamcorper tellus. Vestibulum pulvinar eros nec tortor
                     maximus, iaculis rutrum nibh mollis.
-                  </Typography>
+                  </Desc>
                   <Box
                     sx={{
                       cursor: "pointer",
@@ -167,7 +167,7 @@ const About: React.FC = () => {
                   </Box>
                 </TabPanel>
                 <TabPanel value={tabValue} index={1}>
-                  <Typography
+                  <Desc
                     variant="body1"
                     sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
                   >
@@ -175,7 +175,7 @@ const About: React.FC = () => {
                     high level overviews. Organically grow the holistic world
                     view of disruptive innovation via workplace diversity and
                     empowerment.
-                  </Typography>
+                  </Desc>
                   <Box
                     sx={{
                       cursor: "pointer",
@@ -196,7 +196,7 @@ const About: React.FC = () => {
                   </Box>
                 </TabPanel>
                 <TabPanel value={tabValue} index={2}>
-                  <Typography
+                  <Desc
                     variant="body1"
                     sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
                   >
@@ -204,7 +204,7 @@ const About: React.FC = () => {
                     added activity to beta test. Nanotechnology immersion along
                     the information highway will close the loop on focusing
                     solely on the bottom line.
-                  </Typography>
+                  </Desc>
                   <Box
                     sx={{
                       cursor: "pointer",
@@ -225,7 +225,6 @@ const About: React.FC = () => {
                   </Box>
                 </TabPanel>
               </Paper>
-
             </Box>
 
             <Box sx={{ flex: "1.15" }}>
