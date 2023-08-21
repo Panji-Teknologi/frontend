@@ -39,19 +39,19 @@ const Guide: React.FC = () => {
     alignItems: "center",
     backgroundColor: "#f4f6f8",
     width: 260,
-    minHeight: 290,
+    height: 300,
     padding: theme.spacing(5),
     borderRadius: 20,
     marginTop: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
-      margin: theme.spacing(2, 0, 2, 0),
       width: 230,
-      minHeight: 290,
+      height: 290,
+      margin: theme.spacing(2),
     },
     [theme.breakpoints.down("sm")]: {
-      margin: theme.spacing(2, 0, 2, 0),
-      width: 240,
-      minHeight: 300,
+      margin: theme.spacing(2),
+      width: 220,
+      height: 280,
     },
   }));
 
@@ -63,6 +63,18 @@ const Guide: React.FC = () => {
 
     [theme.breakpoints.down("sm")]: {
       fontSize: "16px",
+    },
+  }));
+
+  const Desc = styled(Typography)(({ theme }) => ({
+    fontSize: "14px",
+    color: "#3B3c45",
+    textAlign: "center",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "12px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "12px",
     },
   }));
 
@@ -128,10 +140,10 @@ const Guide: React.FC = () => {
               >
                 Feedback
               </Title>
-              <Typography variant="body1">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Tempore, ea!
-              </Typography>
+              <Desc variant="body1" sx={{ textAlign: "center" }}>
+                Feedback helps associates understand how they are perceived by
+                others and helps them improve their performance.
+              </Desc>
               <Box
                 sx={{
                   cursor: "pointer",
@@ -158,10 +170,9 @@ const Guide: React.FC = () => {
               >
                 Execution
               </Title>
-              <Typography variant="body1">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Tempore, ea!
-              </Typography>
+              <Desc variant="body1" sx={{ textAlign: "center" }}>
+                Discipline to Complete a Task Thoroughly.
+              </Desc>
 
               <Box
                 sx={{
@@ -190,10 +201,10 @@ const Guide: React.FC = () => {
                 {" "}
                 Support
               </Title>
-              <Typography variant="body1">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Tempore, ea!
-              </Typography>
+              <Desc variant="body1" sx={{ textAlign: "center" }}>
+                with the existence of this platform is expected to support
+                associates in reporting
+              </Desc>
 
               <Box
                 sx={{

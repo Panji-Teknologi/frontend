@@ -93,7 +93,7 @@ const Hero: React.FC = () => {
                   sx={{ fontSize: "16px", color: "#5A6473" }}
                 >
                   {" "}
-                  Know Income and Ongoing Projects
+                  Project Reminder by System
                 </Typography>
               </Box>
               <CustomButton
