@@ -46,8 +46,8 @@ const Hero: React.FC = () => {
           // background: `linear-gradient(321deg, rgba(244,246,248, 1) 68%, rgba(255,122,69,1) 100%)`,
         }}
       >
+        <Navbar />
         <Container>
-          <Navbar />
           <CustomBox>
             <Box sx={{ flex: "1" }}>
               <Title variant="h1" sx={{ mt: 10 }}>
