@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography, styled, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 import Navbar from "../AppBar";
 import heroImg from "../../../assets/images/hero.svg";
@@ -8,8 +8,9 @@ import Guide from "../Guide";
 // import StatsSection from "../Stats";
 import { CheckOutlined } from "@ant-design/icons";
 import About from "../About";
+import AuthFooter from "../../../components/cards/AuthFooter";
 
-const Hero: React.FC = () => {
+const Hero = () => {
   const CustomBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -119,6 +120,19 @@ const Hero: React.FC = () => {
       <About />
       {/* <StatsSection /> */}
       <Footer />
+      <Box
+        sx={{
+          backgroundColor: "#f4f6f8",
+        }}
+      >
+        <Grid
+          item
+          xs={12}
+          sx={{ py: 2, mx: 3, borderTop: 1, borderColor: "#d4d4d4" }}
+        >
+          <AuthFooter />
+        </Grid>
+      </Box>
     </>
   );
 };
