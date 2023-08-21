@@ -1,105 +1,22 @@
-// // material-ui
-// import { useTheme } from "@mui/material/styles";
-// import { Box, Button, Container, Grid, Link, Typography } from "@mui/material";
-
-// import heroImg from "../../../assets/images/hero.svg";
-// // import logo from "../../../assets/images/logo.png";
-// import AnimateButton from "../../../components/@extended/AnimateButton";
-// import DrawerAppBar from "../AppBar";
-// // import Footer from "../Footer";
-
-// // ==============================|| MINIMAL LAYOUT - HEADER ||============================== //
-
-// const Hero = () => {
-//   const theme = useTheme<any>();
-
-//   return (
-//     <div>
-//       <DrawerAppBar />
-//       <Box
-//         sx={{
-//           // display: "flex",
-//           // justifyContent: "space-between",
-//           // alignItems: "center",
-//           height: "100vh",
-//           // background: rgb(255,255,255);
-//           background: `linear-gradient(321deg, rgba(255, 255, 255, 1) 68%, rgba(255,122,69,1) 100%)`,
-//         }}
-//       >
-//         {/* <DrawerAppBar /> */}
-
-//         <Container>
-//           <Grid container spacing={10} p={2}>
-//             <Grid item xs={12} sm={12} md={6} lg={6}>
-//               {/* <img
-//               src={logo}
-//               alt="Hero Associate Mangement"
-//               style={{ height: 30, marginBottom: 50 }}
-//             /> */}
-//               <Typography
-//                 variant="h1"
-//                 gutterBottom
-//                 // color={theme.palette.primary.main}
-//                 color={'#4c4c4c'}
-//                 sx={{ fontSize: 48, fontWeight: "bolder" }}
-//               >
-//                 Integrated Associate Management Platform
-//               </Typography>
-//               <Typography
-//                 variant="subtitle2"
-//                 component="p"
-//                 gutterBottom
-//                 sx={{ fontSize: 16, color: theme.palette.text.secondary }}
-//               >
-//                 A powerful and user-friendly associate management app designed
-//                 to streamline your workforce operations. It robust reporting and
-//                 analytics tools empower you to make data-driven decisions and
-//                 optimize your performance.
-//               </Typography>
-//               <Link href="/register">
-//                 <AnimateButton>
-//                   <Button variant="contained" color="primary" size="large">
-//                     Get Started
-//                   </Button>
-//                 </AnimateButton>
-//               </Link>
-//             </Grid>
-//             <Grid item xs={12} sm={12} md={6} lg={6}>
-//               <img
-//                 src={heroImg}
-//                 alt="Hero Associate Mangement"
-//                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
-//               />
-//             </Grid>
-//           </Grid>
-//         </Container>
-//       </Box>
-//       {/* <Box>
-//         <Footer />
-//       </Box> */}
-//     </div>
-//   );
-// };
-
-// export default Hero;
-
-import { Box, Typography, styled, useMediaQuery } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import { Container } from "@mui/system";
 import Navbar from "../AppBar";
 import heroImg from "../../../assets/images/hero.svg";
 import CustomButton from "../../../components/CustomButton/CustomButton";
 import Footer from "../Footer";
-
+import Guide from "../Guide";
+// import StatsSection from "../Stats";
+import { CheckOutlined } from "@ant-design/icons";
+import About from "../About";
 
 const Hero: React.FC = () => {
-  
   const CustomBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     gap: theme.spacing(5),
-    paddingBottom: theme.spacing(6),
+    paddingBottom: theme.spacing(5),
     marginTop: theme.spacing(3),
-    
+
     [theme.breakpoints.down("md")]: {
       flexDirection: "column",
       alignItems: "center",
@@ -122,23 +39,63 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <Box sx={{ backgroundColor: "#fff", minHeight: "80vh" }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: "#f4f6f8",
+          // background: `linear-gradient(321deg, rgba(244,246,248, 1) 68%, rgba(255,122,69,1) 100%)`,
+        }}
+      >
         <Container>
           <Navbar />
           <CustomBox>
             <Box sx={{ flex: "1" }}>
               <Title variant="h1" sx={{ mt: 10 }}>
-                Integrated Associate Management Platform
+                Associate Management Platform
               </Title>
               <Typography
                 variant="body2"
                 sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
               >
                 A powerful and user-friendly associate management app designed
-                to streamline your workforce operations. It robust reporting and
-                analytics tools empower you to make data-driven decisions and
-                optimize your performance.
+                to streamline your workforce operations.
               </Typography>
+              <Box sx={{ display: "flex" }}>
+                <CheckOutlined
+                  style={{ marginTop: 5, marginInline: 5, color: "#ff6600" }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "16px", color: "#5A6473" }}
+                >
+                  {" "}
+                  Manage Your Own Projects
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex" }}>
+                <CheckOutlined
+                  style={{ marginTop: 5, marginInline: 5, color: "#ff6600" }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "16px", color: "#5A6473" }}
+                >
+                  {" "}
+                  Know Income and Ongoing Projects
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", mb: 5 }}>
+                <CheckOutlined
+                  style={{ marginTop: 5, marginInline: 5, color: "#ff6600" }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "16px", color: "#5A6473" }}
+                >
+                  {" "}
+                  Know Income and Ongoing Projects
+                </Typography>
+              </Box>
               <CustomButton
                 backgroundColor="#ff6600"
                 color="#fff"
@@ -157,6 +114,10 @@ const Hero: React.FC = () => {
           </CustomBox>
         </Container>
       </Box>
+      {/* <div className="wave-bg" style={{ backgroundColor: "#fff" }}></div> */}
+      <Guide />
+      <About />
+      {/* <StatsSection /> */}
       <Footer />
     </>
   );
