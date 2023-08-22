@@ -32,7 +32,7 @@ const Footer = () => {
     fontWeight: "300",
     cursor: "pointer",
     "&:hover": {
-      color: "#000",
+      color: "#ff6600",
     },
   }));
 
