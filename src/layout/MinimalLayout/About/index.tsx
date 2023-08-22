@@ -83,9 +83,9 @@ const About: React.FC = () => {
                 We believe in Long Term Partnership.
               </Title>
               <Desc variant="body2" sx={{ my: 4 }}>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit primis
-                rutrum, nullam tempor malesuada laoreet tempus blandit pretium
-                etc.
+                Our mission is to help you effortlessly manage, monitor, and
+                enhance the performance of your associates while fostering
+                lasting connections.
               </Desc>
 
               <Tabs value={tabValue} onChange={handleTabChange} role="tablist">
@@ -97,7 +97,7 @@ const About: React.FC = () => {
                         color="primary"
                         sx={{ marginTop: 1.5, mx: 2 }}
                       ></Badge>
-                      <TitlePaper variant="body2">Experience</TitlePaper>
+                      <TitlePaper variant="body2">Management</TitlePaper>
                     </Box>
                   }
                   value={0}
@@ -110,7 +110,7 @@ const About: React.FC = () => {
                         color="primary"
                         sx={{ marginTop: 1.5, mx: 2 }}
                       ></Badge>
-                      <TitlePaper variant="body2">Flexibility</TitlePaper>
+                      <TitlePaper variant="body2">Efficiency</TitlePaper>
                     </Box>
                   }
                   value={1}
@@ -141,11 +141,9 @@ const About: React.FC = () => {
                     variant="body1"
                     sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
                   >
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit
-                    primis rutrum, nullam tempor malesuada laoreet tempus
-                    blandit pretium etc. Curabitur vehicula auctor ornare. Nulla
-                    non ullamcorper tellus. Vestibulum pulvinar eros nec tortor
-                    maximus, iaculis rutrum nibh mollis.
+                    Our intuitive platform allows you to seamlessly oversee all
+                    your business partners in one centralized hub. Say goodbye
+                    to the complexities of juggling multiple spreadsheets.
                   </Desc>
                   <Box
                     sx={{
@@ -171,10 +169,8 @@ const About: React.FC = () => {
                     variant="body1"
                     sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
                   >
-                    Leverage agile frameworks to provide a robust synopsis for
-                    high level overviews. Organically grow the holistic world
-                    view of disruptive innovation via workplace diversity and
-                    empowerment.
+                    Optimize your business operations with data-driven
+                    decisions, enhancing overall efficiency.
                   </Desc>
                   <Box
                     sx={{
@@ -200,10 +196,9 @@ const About: React.FC = () => {
                     variant="body1"
                     sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
                   >
-                    Capitalize on low hanging fruit to identify a ballpark value
-                    added activity to beta test. Nanotechnology immersion along
-                    the information highway will close the loop on focusing
-                    solely on the bottom line.
+                    Gain deep insights into your partner's performance with our
+                    advanced data analytics tools. Identify trends,
+                    opportunities, and challenges in an instant.
                   </Desc>
                   <Box
                     sx={{
