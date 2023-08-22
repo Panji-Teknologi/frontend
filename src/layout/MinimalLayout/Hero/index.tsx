@@ -41,6 +41,7 @@ const Hero = () => {
   return (
     <>
       <Box
+        id="HomeHero"
         sx={{
           minHeight: "100vh",
           backgroundColor: "#f4f6f8",

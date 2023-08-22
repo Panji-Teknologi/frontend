@@ -21,8 +21,10 @@ import {
 } from "@mui/material";
 import logoImg from "../../../assets/images/logo.png";
 import CustomButton from "../../../components/CustomButton/CustomButton";
+// import Scroll from 'react-scroll'
 
 const DrawerAppBar = () => {
+  // const ScrollLink = Scroll.ScrollLink
   const [mobileMenu, setMobileMenu] = useState<{
     left: boolean;
   }>({
@@ -141,7 +143,9 @@ const DrawerAppBar = () => {
           >
             {list("left")}
           </Drawer>
-          <NavbarLogo src={logoImg} alt="logo" />
+          <Link href="/">
+            <NavbarLogo src={logoImg} alt="logo" />
+          </Link>
         </Box>
 
         <NavbarLinksBox>

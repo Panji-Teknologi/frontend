@@ -57,7 +57,7 @@ const Guide = () => {
 
   const Title = styled(Typography)(({ theme }) => ({
     fontWeight: "500",
-    fontSize: "24px",
+    fontSize: "22px",
     color: "#3B3c45",
     textAlign: "center",
 
@@ -117,9 +117,11 @@ const Guide = () => {
               textAlign: "center",
             }}
           >
-            Associate Management Platform is robust reporting and analytics
-            tools empower you to make data-driven decisions and optimize your
-            performance. Everything you need to know when becoming an associate!
+            Managing associates is at the core of your business's success. At
+            Associate Management, we understand the importance of nurturing
+            strong relationships with your business partners. We are a
+            comprehensive solution to help you easily manage, track, and
+            optimize the performance of your associates.
           </Typography>
         </CustomBoxGuide>
         <Container>
@@ -138,11 +140,11 @@ const Guide = () => {
                   fontWeight: "700",
                 }}
               >
-                Feedback
+                Ease of Management
               </Title>
               <Desc variant="body1" sx={{ textAlign: "center" }}>
-                Feedback helps associates understand how they are perceived by
-                others and helps them improve their performance.
+                You can effortlessly manage all your business partners in one
+                place.
               </Desc>
               <Box
                 sx={{
@@ -168,10 +170,11 @@ const Guide = () => {
                   fontWeight: "700",
                 }}
               >
-                Execution
+                Productivity Boost
               </Title>
               <Desc variant="body1" sx={{ textAlign: "center" }}>
-                Discipline to Complete a Task Thoroughly.
+                Make improvements that can result in significant business
+                outcomes.
               </Desc>
 
               <Box
