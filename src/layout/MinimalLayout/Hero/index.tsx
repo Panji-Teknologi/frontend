@@ -116,7 +116,6 @@ const Hero = () => {
           </CustomBox>
         </Container>
       </Box>
-      {/* <div className="wave-bg" style={{ backgroundColor: "#fff" }}></div> */}
       <Guide />
       <About />
       {/* <StatsSection /> */}
