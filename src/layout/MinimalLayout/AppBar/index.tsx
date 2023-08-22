@@ -21,10 +21,8 @@ import {
 } from "@mui/material";
 import logoImg from "../../../assets/images/logo.png";
 import CustomButton from "../../../components/CustomButton/CustomButton";
-// import Scroll from 'react-scroll'
 
 const DrawerAppBar = () => {
-  // const ScrollLink = Scroll.ScrollLink
   const [mobileMenu, setMobileMenu] = useState<{
     left: boolean;
   }>({
@@ -125,59 +123,61 @@ const DrawerAppBar = () => {
     //   <CssBaseline />
     //   <AppBar component="nav" color="transparent" sx={{ boxShadow: "none" }}>
     //     <Toolbar>
-    <NavbarContainer>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "2.5rem",
-        }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <CustomMenuIcon onClick={toggleDrawer("left", true)} />
-          <Drawer
-            anchor="left"
-            open={mobileMenu["left"]}
-            onClose={toggleDrawer("left", false)}
-          >
-            {list("left")}
-          </Drawer>
-          <Link href="/">
-            <NavbarLogo src={logoImg} alt="logo" />
-          </Link>
+    <Box sx={{ backgroundColor: "#f4f6f8" }}>
+      <NavbarContainer>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "2.5rem",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <CustomMenuIcon onClick={toggleDrawer("left", true)} />
+            <Drawer
+              anchor="left"
+              open={mobileMenu["left"]}
+              onClose={toggleDrawer("left", false)}
+            >
+              {list("left")}
+            </Drawer>
+            <Link href="/">
+              <NavbarLogo src={logoImg} alt="logo" />
+            </Link>
+          </Box>
+
+          <NavbarLinksBox>
+            <NavLink variant="body2">Home</NavLink>
+            <NavLink variant="body2">About</NavLink>
+            <NavLink variant="body2">Services</NavLink>
+            <NavLink variant="body2">Listed</NavLink>
+            <NavLink variant="body2">Contact</NavLink>
+          </NavbarLinksBox>
         </Box>
 
-        <NavbarLinksBox>
-          <NavLink variant="body2">Home</NavLink>
-          <NavLink variant="body2">About</NavLink>
-          <NavLink variant="body2">Services</NavLink>
-          <NavLink variant="body2">Listed</NavLink>
-          <NavLink variant="body2">Contact</NavLink>
-        </NavbarLinksBox>
-      </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1rem",
+          }}
+        >
+          <Link href="/login">
+            <NavLink variant="body2">Login</NavLink>
+          </Link>
 
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "1rem",
-        }}
-      >
-        <Link href="/login">
-          <NavLink variant="body2">Login</NavLink>
-        </Link>
-
-        <Link href="/register">
-          <CustomButton
-            backgroundColor="#ff6600"
-            color="#fff"
-            buttonText="Sign Up"
-          />
-        </Link>
-      </Box>
-    </NavbarContainer>
+          <Link href="/register">
+            <CustomButton
+              backgroundColor="#ff6600"
+              color="#fff"
+              buttonText="Sign Up"
+            />
+          </Link>
+        </Box>
+      </NavbarContainer>
+    </Box>
     //     </Toolbar>
     //   </AppBar>
 

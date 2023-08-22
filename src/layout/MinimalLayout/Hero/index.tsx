@@ -1,14 +1,8 @@
-import { Box, Typography, styled, Grid } from "@mui/material";
+import { Box, Typography, styled, Link } from "@mui/material";
 import { Container } from "@mui/system";
-import Navbar from "../AppBar";
 import heroImg from "../../../assets/images/hero.svg";
 import CustomButton from "../../../components/CustomButton/CustomButton";
-import Footer from "../Footer";
-import Guide from "../Guide";
-// import StatsSection from "../Stats";
 import { CheckOutlined } from "@ant-design/icons";
-import About from "../About";
-import AuthFooter from "../../../components/cards/AuthFooter";
 
 const Hero = () => {
   const CustomBox = styled(Box)(({ theme }) => ({
@@ -16,8 +10,7 @@ const Hero = () => {
     justifyContent: "center",
     gap: theme.spacing(5),
     paddingBottom: theme.spacing(5),
-    marginTop: theme.spacing(3),
-
+    paddingTop: theme.spacing(5),
     [theme.breakpoints.down("md")]: {
       flexDirection: "column",
       alignItems: "center",
@@ -41,20 +34,16 @@ const Hero = () => {
   return (
     <>
       <Box
-        id="HomeHero"
         sx={{
           minHeight: "100vh",
           backgroundColor: "#f4f6f8",
           // background: `linear-gradient(321deg, rgba(244,246,248, 1) 68%, rgba(255,122,69,1) 100%)`,
         }}
       >
-        <Navbar />
         <Container>
           <CustomBox>
             <Box sx={{ flex: "1" }}>
-              <Title variant="h1" sx={{ mt: 10 }}>
-                Associate Management Platform
-              </Title>
+              <Title variant="h1">Associate Management Platform</Title>
               <Typography
                 variant="body2"
                 sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
@@ -98,12 +87,14 @@ const Hero = () => {
                   Project Reminder by System
                 </Typography>
               </Box>
-              <CustomButton
-                backgroundColor="#ff6600"
-                color="#fff"
-                buttonText="Join Us Today!"
-                heroBtn={true}
-              />
+              <Link href="/register">
+                <CustomButton
+                  backgroundColor="#ff6600"
+                  color="#fff"
+                  buttonText="Join Us Today!"
+                  heroBtn={true}
+                />
+              </Link>
             </Box>
 
             <Box sx={{ flex: "1.25" }}>
@@ -115,23 +106,6 @@ const Hero = () => {
             </Box>
           </CustomBox>
         </Container>
-      </Box>
-      <Guide />
-      <About />
-      {/* <StatsSection /> */}
-      <Footer />
-      <Box
-        sx={{
-          backgroundColor: "#f4f6f8",
-        }}
-      >
-        <Grid
-          item
-          xs={12}
-          sx={{ py: 2, mx: 3, borderTop: 1, borderColor: "#d4d4d4" }}
-        >
-          <AuthFooter />
-        </Grid>
       </Box>
     </>
   );
