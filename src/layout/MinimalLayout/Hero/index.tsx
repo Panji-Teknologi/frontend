@@ -101,7 +101,7 @@ const Hero = () => {
               <CustomButton
                 backgroundColor="#ff6600"
                 color="#fff"
-                buttonText="More About Us"
+                buttonText="Join Us Today!"
                 heroBtn={true}
               />
             </Box>

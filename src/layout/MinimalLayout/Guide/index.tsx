@@ -143,7 +143,7 @@ const Guide = () => {
                 Ease of Management
               </Title>
               <Desc variant="body1" sx={{ textAlign: "center" }}>
-                You can effortlessly manage all your business partners in one
+                You can effortlessly manage all your projects in one
                 place.
               </Desc>
               <Box
