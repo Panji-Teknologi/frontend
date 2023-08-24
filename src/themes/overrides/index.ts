@@ -17,6 +17,8 @@ import Tab from './Tab';
 import TableCell from './TableCell';
 import Tabs from './Tabs';
 import Typography from './Typography';
+import Select from './Select';
+import MenuItem from './MenuItem';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
@@ -36,6 +38,8 @@ export default function ComponentsOverrides(theme: any) {
     Tab(theme),
     TableCell(theme),
     Tabs(),
-    Typography()
+    Typography(),
+    Select(theme),
+    MenuItem(theme),
   );
 }
