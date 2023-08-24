@@ -10,7 +10,7 @@ import NotFoundPage from '../pages/NotFoundPage';
 
 // render - pages
 const AuthLogin = Loadable(lazy(() => import('../pages/authentication/Login')));
-const AuthRegister = Loadable(lazy(() => import('../pages/authentication/Register')));
+const AuthPhone = Loadable(lazy(() => import('../pages/authentication/Register')));
 
 const Dashboard = Loadable(lazy(() => import('../pages/dashboard')));
 const History = Loadable(lazy(() => import('../pages/history')));
@@ -37,7 +37,7 @@ const routes = (isAuthenticated: boolean) => [
       },
       {
         path: 'register',
-        element: isAuthenticated ? <Navigate to="/dashboard" replace /> : <AuthRegister />
+        element: isAuthenticated ? <Navigate to="/dashboard" replace /> : <AuthPhone />
       },
       // ======== Authenticated ========
       {
