@@ -5,16 +5,22 @@ import App from './App.tsx'
 
 // third-party
 import { Provider as ReduxProvider } from 'react-redux';
+import { AuthProvider } from 'react-auth-kit'
 
 // project import
 import { store } from './store';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ReduxProvider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ReduxProvider>
+    <AuthProvider authType={'cookie'}
+      authName={'_auth'}
+      cookieDomain={window.location.hostname}
+      cookieSecure={false}>
+      <ReduxProvider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ReduxProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )

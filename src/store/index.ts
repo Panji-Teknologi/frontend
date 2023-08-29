@@ -8,7 +8,12 @@ import reducers from './reducers';
 // ==============================|| REDUX TOOLKIT - MAIN STORE ||============================== //
 
 export const store = configureStore({
-  reducer: reducers
+  reducer: reducers,
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      serializableCheck: false,
+    })
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
