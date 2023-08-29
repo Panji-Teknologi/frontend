@@ -1,4 +1,6 @@
 import { useRef, useState, ReactNode, SyntheticEvent } from 'react';
+import { useSignOut } from 'react-auth-kit';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -54,9 +56,13 @@ function a11yProps(index: number) {
 const Profile = () => {
   const theme = useTheme<any>();
   const anchorRef = useRef<HTMLButtonElement>(null);
+  const signOut = useSignOut();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     // logout
+    signOut();
+    navigate('/login')
   };
 
   const [open, setOpen] = useState<boolean>(false);

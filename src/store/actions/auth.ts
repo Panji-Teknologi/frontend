@@ -14,14 +14,14 @@ interface RegisterType {
     bank_atas_nama: string
     no_rek_associate: string
     ktp_image: File | any
-    create_date: string | any
+    create_date: Date | any
     term_of_service_signature: string
     master_sales_employee_id: string
     sumber_informasi: string
 }
 
-const logOut = () => {
-    return signOut(auth);
+interface LoginType {
+    no_hp: string
 }
 
 const setUpRecaptcha = (number: string) => {
@@ -59,6 +59,7 @@ const register = createAsyncThunk(
     ) => {
         try {
             const formData = new FormData();
+
             formData.append("name", name);
             formData.append("email", email);
             formData.append("address", address);
@@ -88,6 +89,33 @@ const register = createAsyncThunk(
             }
         }
     }
+);
+
+const login = createAsyncThunk(
+    'auth/login',
+    async ({ no_hp }: LoginType, { rejectWithValue }) => {
+        try {
+            const data = {
+                no_hp
+            }
+
+            const response = await Axios.post(`${API_URL}/save_token_associate`, data, {
+                headers: {
+                    Accept: "application/json",
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            return response.data;
+        } catch (error: any) {
+            // return custom error message from backend if present
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message)
+            } else {
+                return rejectWithValue(error.message)
+            }
+        }
+    }
 )
 
-export { logOut, setUpRecaptcha, register }
+export { setUpRecaptcha, register, login }

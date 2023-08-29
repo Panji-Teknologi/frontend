@@ -1,13 +1,14 @@
 import { useRoutes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { useIsAuthenticated } from "react-auth-kit";
 
 import ThemeProvider from "./themes"
 import ScrollTop from "./components/ScrollTop"
 import routes from "./routes";
 
 function App() {
-
-  const Routes = useRoutes(routes(false));
+  const isAuthenticated = useIsAuthenticated();
+  const Routes = useRoutes(routes(isAuthenticated()));
 
   return (
     <ThemeProvider>
