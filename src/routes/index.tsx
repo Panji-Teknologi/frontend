@@ -1,10 +1,10 @@
 import { lazy } from 'react';
+import { RequireAuth } from 'react-auth-kit';
 
 // project import
 import Loadable from '../components/Loadable';
 import MainLayout from '../layout/MainLayout';
 import MinimalLayout from '../layout/MinimalLayout';
-import ProtectedRoutes from './ProtectedRoutes';
 import { Navigate } from 'react-router-dom';
 import NotFoundPage from '../pages/NotFoundPage';
 
@@ -43,17 +43,17 @@ const routes = (isAuthenticated: boolean) => [
       {
         path: 'dashboard',
         element: (
-          <ProtectedRoutes isSignedIn={isAuthenticated}>
+          <RequireAuth loginPath='/login'>
             <Dashboard />
-          </ProtectedRoutes>
+          </RequireAuth>
         )
       },
       {
         path: 'history',
         element: (
-          <ProtectedRoutes isSignedIn={isAuthenticated}>
+          <RequireAuth loginPath='/login'>
             <History />
-          </ProtectedRoutes>
+          </RequireAuth>
         )
       }
     ]
