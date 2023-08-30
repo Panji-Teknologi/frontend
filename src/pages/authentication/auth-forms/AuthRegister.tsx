@@ -27,6 +27,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-hot-toast';
 import SignatureCanvas from 'react-signature-canvas';
+import dayjs from 'dayjs';
 
 // project import
 import AnimateButton from '../../../components/@extended/AnimateButton';
@@ -125,7 +126,7 @@ const AuthRegister = () => {
               bank_atas_nama: values.bank_atas_nama,
               no_rek_associate: values.no_rek_associate,
               ktp_image: values.ktp_image,
-              create_date: new Date(),
+              create_date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
               term_of_service_signature: toBase64,
               master_sales_employee_id: '1',
               sumber_informasi: '0'
