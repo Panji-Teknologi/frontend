@@ -16,7 +16,7 @@ function App() {
         {Routes}
       </ScrollTop>
       <Toaster
-        position="top-center"
+        position="top-right"
         reverseOrder={false}
         gutter={8}
         toastOptions={{
