@@ -1,4 +1,4 @@
-import { RecaptchaVerifier, signInWithPhoneNumber, signOut } from 'firebase/auth';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import Axios from 'axios';
 import { auth } from '../../firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -82,8 +82,8 @@ const register = createAsyncThunk(
             })
         } catch (error: any) {
             // return custom error message from backend if present
-            if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message)
+            if (error.response && error.response.data.status) {
+                return rejectWithValue(error.response.data.status)
             } else {
                 return rejectWithValue(error.message)
             }

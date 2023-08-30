@@ -1,24 +1,21 @@
-import { useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import {
   Button,
   FormHelperText,
   Grid,
-  Link,
   InputLabel,
   OutlinedInput,
   Stack,
-  FormControlLabel,
-  Checkbox,
   Typography,
   CircularProgress,
 } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
-import { Formik, useFormikContext } from 'formik';
+import { Formik } from 'formik';
 import { toast } from 'react-hot-toast';
 import { useSignIn } from 'react-auth-kit';
 
@@ -38,7 +35,6 @@ const AuthLogin = () => {
   const signIn = useSignIn();
   const { loading } = useAppSelector((state: any) => state.auth);
 
-  const [checked, setChecked] = useState<boolean>(false);
   const [response, setResponse] = useState<any>(null);
   const [flag, setFlag] = useState<boolean>(false);
   const [verified, setVerified] = useState<{ status: boolean, message: string }>({
@@ -49,19 +45,6 @@ const AuthLogin = () => {
   // loading
   const [loadSendOTP, setLoadSendOTP] = useState<boolean>(false);
   const [loadVerifyOTP, setLoadVerifyOTP] = useState<boolean>(false);
-
-  const ValueChangeListener = () => {
-    const { submitForm, values } = useFormikContext();
-    const { otp }: any = values;
-
-    useEffect(() => {
-      if (otp !== '') {
-        submitForm();
-      }
-    }, [otp, submitForm]);
-
-    return null;
-  };
 
   const handleSendOTP = async (phone: string) => {
     setLoadSendOTP(true);
@@ -151,7 +134,7 @@ const AuthLogin = () => {
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               {/* ============ Phone ============ */}
-              <Grid item xs={12} sx={{ display: flag ? 'none' : 'block' }}>
+              {!verified.status && <Grid item xs={12} sx={{ display: flag ? 'none' : 'block' }}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="no_hp-signup">Phone</InputLabel>
                   <Stack direction='row' spacing={1}>
@@ -186,9 +169,9 @@ const AuthLogin = () => {
                   )}
                   <div id="recaptcha-container"></div>
                 </Stack>
-              </Grid>
+              </Grid>}
               {/* ============ OTP ============ */}
-              <Grid item xs={12} sx={{ display: flag ? 'block' : 'none' }}>
+              {!verified.status && <Grid item xs={12} sx={{ display: flag ? 'block' : 'none' }}>
                 <Stack spacing={1}>
                   <Stack direction='row' justifyContent='space-between'>
                     <InputLabel htmlFor="otp-signup">OTP Number</InputLabel>
@@ -232,27 +215,18 @@ const AuthLogin = () => {
                   )}
                   <div id="recaptcha-container"></div>
                 </Stack>
-              </Grid>
+              </Grid>}
 
-              <Grid item xs={12} sx={{ mt: -1 }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={checked}
-                        onChange={(event) => setChecked(event.target.checked)}
-                        name="checked"
-                        color="primary"
-                        size="small"
-                      />
-                    }
-                    label={<Typography variant="h6">Keep me sign in</Typography>}
-                  />
-                  <Link variant="h6" component={RouterLink} to="" color="text.primary">
-                    Forgot Password?
-                  </Link>
+              {verified.status && <Grid item xs={12}>
+                <Stack spacing={0.5} direction='row' alignItems='center' justifyContent='center'>
+                  <CheckCircleOutlined style={{ fontSize: 18, color: 'green' }} />
+                  <Typography variant='h4' sx={{ color: 'darkseagreen' }}>
+                    {verified.message}
+                  </Typography>
                 </Stack>
-              </Grid>
+              </Grid>}
+
+
               {errors.submit && (
                 <Grid item xs={12}>
                   <FormHelperText error>{errors.submit}</FormHelperText>

@@ -20,7 +20,7 @@ import {
 import { styled } from "@mui/material/styles"
 
 // assets
-import { CheckCircleOutlined, CloudUploadOutlined } from '@ant-design/icons';
+import { CloudUploadOutlined } from '@ant-design/icons';
 
 // third party
 import * as Yup from 'yup';
@@ -31,9 +31,10 @@ import SignatureCanvas from 'react-signature-canvas';
 // project import
 import AnimateButton from '../../../components/@extended/AnimateButton';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { register, setUpRecaptcha } from '../../../store/actions/auth';
+import { register } from '../../../store/actions/auth';
 import { getBankDestination } from '../../../store/actions/bank';
 import { FileSize } from '../../../utils/file-size';
+import { REGISTER_FULFILLED, REGISTER_REJECTED } from '../../../store/types';
 
 import './styles.modules.css'
 
@@ -64,17 +65,7 @@ const AuthRegister = () => {
   const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"]
 
   const [sign, setSign] = useState<null | any>(null);
-  const [response, setResponse] = useState<any>(null);
-  const [flag, setFlag] = useState<boolean>(false);
-  const [verified, setVerified] = useState<{ status: boolean, message: string }>({
-    status: false,
-    message: ""
-  });
   const [fileSelected, setFileSelected] = useState<File>()
-
-  // loading
-  const [loadSendOTP, setLoadSendOTP] = useState<boolean>(false);
-  const [loadVerifyOTP, setLoadVerifyOTP] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getBankDestination())
@@ -82,41 +73,6 @@ const AuthRegister = () => {
 
   const handleResetSign = () => {
     sign.clear();
-  }
-
-  const handleSendOTP = async (phone: string) => {
-    setLoadSendOTP(true);
-
-    try {
-      if (phone !== '') {
-        const response = await setUpRecaptcha(phone);
-        setResponse(response);
-        setFlag(true);
-        toast.success("OTP code has been sent to your phone number");
-      }
-      setLoadSendOTP(false);
-    } catch (error: any) {
-      toast.error("Error sending OTP");
-      setLoadSendOTP(false);
-    }
-  }
-
-  const handleVerifyOTP = async (otp: string) => {
-    setLoadVerifyOTP(true);
-
-    try {
-      await response?.confirm(otp);
-
-      setVerified({
-        status: true,
-        message: "Your number has been verified"
-      })
-      toast.success("Your number has been verified");
-      setLoadVerifyOTP(false);
-    } catch (error: any) {
-      toast.error("Error verifying OTP");
-      setLoadVerifyOTP(false);
-    }
   }
 
   return (
@@ -128,7 +84,6 @@ const AuthRegister = () => {
           address: '',
           job: '',
           no_hp: '',
-          otp: '',
           bank_code: '',
           bank_atas_nama: '',
           no_rek_associate: '',
@@ -140,7 +95,6 @@ const AuthRegister = () => {
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           address: Yup.string().max(255).required('Address is required'),
           job: Yup.string().max(50).required('Job is required'),
-          otp: Yup.string().min(6).max(6).required('OTP number is required'),
           no_hp: Yup.string().max(15).test('+62', 'The number must start with +62', (value) => {
             const searchTerm = '+62';
             const indexOfFirst = value?.indexOf(searchTerm);
@@ -177,12 +131,21 @@ const AuthRegister = () => {
               sumber_informasi: '0'
             };
 
-            await dispatch(register(data))
+            const response = await dispatch(register(data))
 
-            setStatus({ success: false });
-            setSubmitting(false);
-            toast.success("Your account registration has been successful");
-            navigate("/login");
+            if (response.type === REGISTER_FULFILLED) {
+              setStatus({ success: true });
+              setSubmitting(false);
+              toast.success("Your account registration has been successful");
+              navigate("/login");
+            }
+
+            if (response.type === REGISTER_REJECTED) {
+              toast.error(response.payload as any);
+              setStatus({ success: false });
+              setSubmitting(false);
+            }
+
           } catch (err: any) {
             console.error(err);
             setStatus({ success: false });
@@ -263,7 +226,7 @@ const AuthRegister = () => {
                 </Stack>
               </Grid>
               {/* ============ Job ============ */}
-              <Grid item xs={12}>
+              <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="job-signup">Job*</InputLabel>
                   <OutlinedInput
@@ -285,7 +248,7 @@ const AuthRegister = () => {
                 </Stack>
               </Grid>
               {/* ============ Phone ============ */}
-              <Grid item xs={12} sx={{ display: flag ? 'none' : 'block' }}>
+              <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="no_hp-signup">Phone</InputLabel>
                   <Stack direction='row' spacing={1}>
@@ -300,71 +263,12 @@ const AuthRegister = () => {
                       onChange={handleChange}
                       placeholder="+62..."
                     />
-                    <Button
-                      size='small'
-                      color='info'
-                      variant='contained'
-                      disabled={Boolean(touched.no_hp && errors.no_hp)}
-                      sx={{ width: '30%' }}
-                      onClick={() => handleSendOTP(values.no_hp)}
-                    >
-                      {loadSendOTP ? (
-                        <CircularProgress sx={{ color: "#fff" }} size={16} />
-                      ) : "Send OTP"}
-                    </Button>
                   </Stack>
                   {touched.no_hp && errors.no_hp && (
                     <FormHelperText error id="helper-text-no_hp-signup">
                       {errors.no_hp}
                     </FormHelperText>
                   )}
-                  <div id="recaptcha-container"></div>
-                </Stack>
-              </Grid>
-              {/* ============ OTP ============ */}
-              <Grid item xs={12} sx={{ display: flag ? 'block' : 'none' }}>
-                <Stack spacing={1}>
-                  <Stack direction='row' justifyContent='space-between'>
-                    <InputLabel htmlFor="otp-signup">OTP Number</InputLabel>
-                    {verified.status && (
-                      <Stack spacing={0.5} direction='row' alignItems='center'>
-                        <CheckCircleOutlined style={{ fontSize: 12, color: 'green' }} />
-                        <Typography variant='caption' color='green'>{verified.message}</Typography>
-                      </Stack>
-                    )}
-                  </Stack>
-                  <Stack direction='row' spacing={1}>
-                    <OutlinedInput
-                      fullWidth
-                      error={Boolean(touched.otp && errors.otp)}
-                      id="otp-signup"
-                      type="text"
-                      value={values.otp}
-                      name="otp"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder="******"
-                      disabled={verified.status}
-                    />
-                    <Button
-                      size='small'
-                      color='info'
-                      variant='contained'
-                      disabled={Boolean(touched.otp && errors.otp) || verified.status}
-                      sx={{ width: '30%' }}
-                      onClick={() => handleVerifyOTP(values.otp)}
-                    >
-                      {loadVerifyOTP ? (
-                        <CircularProgress sx={{ color: "#fff" }} size={16} />
-                      ) : "Verify OTP"}
-                    </Button>
-                  </Stack>
-                  {touched.otp && errors.otp && (
-                    <FormHelperText error id="helper-text-otp-signup">
-                      {errors.otp}
-                    </FormHelperText>
-                  )}
-                  <div id="recaptcha-container"></div>
                 </Stack>
               </Grid>
               {/* ============ Bank Code ============ */}
