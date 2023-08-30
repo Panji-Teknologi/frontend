@@ -77,7 +77,7 @@ const register = createAsyncThunk(
             await Axios.post(`${API_URL}/register_associate`, formData, {
                 headers: {
                     Accept: "application/json",
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                 },
             })
         } catch (error: any) {
