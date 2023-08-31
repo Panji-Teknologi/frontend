@@ -111,7 +111,7 @@ const AuthLogin = () => {
               if (res.type === LOGIN_FULFILLED) {
                 // set data login in cookie
                 signIn({
-                  token: res.payload?.data?.data,
+                  token: res.payload?.data,
                   expiresIn: 43200,
                   tokenType: 'Bearer',
                   authState: {
