@@ -26,6 +26,7 @@ import { useAppDispatch, useAppSelector } from '../../../store';
 
 // assets
 import { CheckCircleOutlined } from '@ant-design/icons';
+import { LOGIN_FULFILLED, LOGIN_REJECTED } from '../../../store/types';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -105,23 +106,32 @@ const AuthLogin = () => {
             }
 
             if (verified.status) {
-              const response = await dispatch(login(data))
+              const res = await dispatch(login(data))
 
-              // set data login in cookie
-              signIn({
-                token: response.payload?.data?.data,
-                expiresIn: 43200,
-                tokenType: 'Bearer',
-                authState: {
-                  phone: values.no_hp
-                }
-              });
+              if (res.type === LOGIN_FULFILLED) {
+                // set data login in cookie
+                signIn({
+                  token: res.payload?.data?.data,
+                  expiresIn: 43200,
+                  tokenType: 'Bearer',
+                  authState: {
+                    phone: values.no_hp
+                  }
+                });
 
-              // navigate to dashboard page
-              navigate('/dashboard')
+                // navigate to dashboard page
+                navigate('/dashboard');
+                toast.success("Login successful");
 
-              setStatus({ success: false });
-              setSubmitting(false);
+                setStatus({ success: true });
+                setSubmitting(false);
+              }
+
+              if (res.type === LOGIN_REJECTED) {
+                toast.error(res.payload as any);
+                setStatus({ success: false });
+                setSubmitting(false);
+              }
             }
           } catch (err: any) {
             setStatus({ success: false });
@@ -226,12 +236,12 @@ const AuthLogin = () => {
                 </Stack>
               </Grid>}
 
-
               {errors.submit && (
                 <Grid item xs={12}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
                 </Grid>
               )}
+
               {verified.status && (
                 <Grid item xs={12}>
                   <AnimateButton>
