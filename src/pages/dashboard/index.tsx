@@ -1,13 +1,31 @@
+import { useEffect } from 'react';
 
 // material-ui
 import { Grid, Typography } from '@mui/material';
 
 // project import
 import AnalyticCard from '../../components/cards/statistics/AnalyticCard';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { getProjectByAssociate } from '../../store/actions/project';
+import { getUserIdFromToken } from '../../utils/decode-token';
+import useCookie from '../../hooks/useCookie';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const Dashboard = () => {
+    const dispatch = useAppDispatch();
+    const { projects } = useAppSelector((state: any) => state.project);
+
+    const [token] = useCookie('_auth');
+    const tokenUserId = getUserIdFromToken(token);
+
+    useEffect(() => {
+        dispatch(getProjectByAssociate({ token, tokenUserId }))
+    }, []);
+
+    console.log("PROJECTS > ", projects);
+
+
     return (
         <Grid container spacing={2.5} pb={5}>
             {/* row 1 */}
