@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // material-ui
@@ -9,7 +8,6 @@ import {
     InputLabel,
     OutlinedInput,
     Stack,
-    Typography,
     CircularProgress,
 } from '@mui/material';
 
@@ -21,11 +19,10 @@ import { useSignIn } from 'react-auth-kit';
 
 // project import
 import AnimateButton from '../../../components/@extended/AnimateButton';
-import { login, setUpRecaptcha } from '../../../store/actions/auth';
+import { login } from '../../../store/actions/auth';
 import { useAppDispatch, useAppSelector } from '../../../store';
 
 // assets
-import { CheckCircleOutlined } from '@ant-design/icons';
 import { LOGIN_FULFILLED, LOGIN_REJECTED } from '../../../store/types';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
