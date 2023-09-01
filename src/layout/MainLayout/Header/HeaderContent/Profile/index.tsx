@@ -26,7 +26,6 @@ import ProfileTab from "./ProfileTab";
 import SettingTab from "./SettingTab";
 import { useAppDispatch, useAppSelector } from "../../../../../store";
 import { getUserById } from "../../../../../store/actions/profile";
-import { setToken } from "../../../../../store/reducers/auth";
 
 // assets
 import {
@@ -38,14 +37,18 @@ import { getUserIdFromToken } from "../../../../../utils/decode-token";
 import useCookie from "../../../../../hooks/useCookie";
 
 interface TabPanelProps {
-  children: ReactNode;
-  index: any;
-  value: any;
+  children?: ReactNode;
+  index: number;
+  value: number;
   dir?: string;
 }
 
-// tab panel wrapper
-function TabPanel({ children, value, index, ...other }: TabPanelProps) {
+const TabPanel: React.FC<TabPanelProps> = ({
+  children,
+  index,
+  value,
+  ...other
+}) => {
   return (
     <div
       role="tabpanel"
@@ -54,10 +57,10 @@ function TabPanel({ children, value, index, ...other }: TabPanelProps) {
       aria-labelledby={`profile-tab-${index}`}
       {...other}
     >
-      {value === index && children}
+      {value === index && <Typography>{children}</Typography>}
     </div>
   );
-}
+};
 
 function a11yProps(index: number) {
   return {
@@ -69,27 +72,28 @@ function a11yProps(index: number) {
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
 const Profile = () => {
-  const [cookie] = useCookie("_auth");
   const theme = useTheme<any>();
   const anchorRef = useRef<HTMLButtonElement>(null);
   const signOut = useSignOut();
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(0);
+  const [token] = useCookie("_auth");
+  const [value, setValue] = useState(0);
+  const tokenUserId = getUserIdFromToken(token);
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state: any) => state.profile);
-  const { userToken } = useAppSelector((state: any) => state.auth);
-  const userId = getUserIdFromToken(userToken);
+  const userId = getUserIdFromToken(token);
+  const { profiles } = useAppSelector((state: any) => state.profile);
+
+  const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  console.log(profiles, "isi profiles");
+  console.log(userId, "isi user Id");
 
   useEffect(() => {
-    if (cookie) {
-      dispatch(setToken(cookie));
-    }
-
-    if (userId) {
-      dispatch(getUserById({ token: userToken, id: userId }));
-    }
-  }, [dispatch]);
+    dispatch(getUserById({ token, tokenUserId }));
+  }, []);
 
   const handleLogout = async () => {
     // logout
@@ -106,10 +110,6 @@ const Profile = () => {
       return;
     }
     setOpen(false);
-  };
-
-  const handleChange = (event: SyntheticEvent<Element, Event>) => {
-    setValue(Number(event.currentTarget));
   };
 
   const iconBackColorOpen = "grey.300";
@@ -131,7 +131,7 @@ const Profile = () => {
       >
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
           <UserOutlined />
-          <Typography variant="subtitle1"> {data?.name}</Typography>
+          <Typography variant="subtitle1"> {profiles?.name}</Typography>
         </Stack>
       </ButtonBase>
       <Popper
@@ -184,9 +184,11 @@ const Profile = () => {
                               style={{ fontSize: 35, color: "#08c" }}
                             />
                             <Stack>
-                              <Typography variant="h6">{data?.name}</Typography>
+                              <Typography variant="h6">
+                                {profiles?.name}
+                              </Typography>
                               <Typography variant="body2" color="textSecondary">
-                                {data?.job}
+                                {profiles?.job}
                               </Typography>
                             </Stack>
                           </Stack>
@@ -208,7 +210,7 @@ const Profile = () => {
                           <Tabs
                             variant="fullWidth"
                             value={value}
-                            onChange={handleChange}
+                            onChange={handleTabChange}
                             aria-label="profile tabs"
                           >
                             <Tab
@@ -251,10 +253,10 @@ const Profile = () => {
                             />
                           </Tabs>
                         </Box>
-                        <TabPanel value={value} index={0} dir={theme.direction}>
+                        <TabPanel value={value} index={0}>
                           <ProfileTab handleLogout={handleLogout} />
                         </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
+                        <TabPanel value={value} index={1}>
                           <SettingTab />
                         </TabPanel>
                       </>
