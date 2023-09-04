@@ -3,12 +3,12 @@ import { Box, Typography } from "@mui/material"
 
 // ==============================|| HISTTORY ||============================== //
 
-const History = () => {
+const Project = () => {
     return (
         <Box>
-            <Typography variant="h5">History</Typography>
+            <Typography variant="h5">Project</Typography>
         </Box>
     )
 }
 
-export default History
+export default Project

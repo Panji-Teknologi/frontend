@@ -10,6 +10,10 @@ import { AuthProvider } from 'react-auth-kit'
 // project import
 import { store } from './store';
 
+// apex-chart
+import './assets/third-party/apex-chart.css';
+import './assets/third-party/react-table.css';
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider authType={'cookie'}

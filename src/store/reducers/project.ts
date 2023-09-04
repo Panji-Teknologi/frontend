@@ -30,7 +30,6 @@ const project = createSlice({
     extraReducers:
         (builder) => {
             builder.addCase(getProjectByAssociate.fulfilled, (state, { payload }) => {
-                console.log("payload projects", payload);
                 state.projects = payload;
             });
         }

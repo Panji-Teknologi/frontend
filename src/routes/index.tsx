@@ -13,7 +13,7 @@ const AuthLogin = Loadable(lazy(() => import('../pages/authentication/Login')));
 const AuthPhone = Loadable(lazy(() => import('../pages/authentication/Register')));
 
 const Dashboard = Loadable(lazy(() => import('../pages/dashboard')));
-const History = Loadable(lazy(() => import('../pages/history')));
+const Project = Loadable(lazy(() => import('../pages/project')));
 
 // ==============================|| ROUTING RENDER ||============================== //
 
@@ -49,10 +49,10 @@ const routes = (isAuthenticated: boolean) => [
         )
       },
       {
-        path: 'history',
+        path: 'project',
         element: (
           <RequireAuth loginPath='/login'>
-            <History />
+            <Project />
           </RequireAuth>
         )
       }
