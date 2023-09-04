@@ -30,7 +30,6 @@ const Dashboard = () => {
   const companyNames: string[] = projects?.map((project: any) => project.client_company_name);
   const totalPrice = projects?.reduce((acc: number, curr: any) => acc + curr.total_price_contract, 0)
 
-
   return (
     <Grid container spacing={2.5} pb={5}>
       {/* row 1 */}
