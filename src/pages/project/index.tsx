@@ -35,9 +35,6 @@ const Project = () => {
     console.log("Seacrh Value : ", value)
   }
 
-  console.log("PROKECTS : ", projects);
-
-
   return (
     <Box sx={{ position: 'relative', mb: 3 }}>
       <Typography variant="h5">Project</Typography>

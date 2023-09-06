@@ -8,6 +8,12 @@ interface ProjectByAssociate {
 	tokenUserId: number | null
 }
 
+interface ProjectDetail {
+	token: string;
+	tokenUserId: number | null
+	contract: string
+}
+
 const getProjectByAssociate = createAsyncThunk(
 	'project/by-associate',
 	async ({ token, tokenUserId }: ProjectByAssociate, { rejectWithValue }) => {
@@ -31,4 +37,27 @@ const getProjectByAssociate = createAsyncThunk(
 	}
 );
 
-export { getProjectByAssociate }
+const getProjectDetail = createAsyncThunk(
+	'project/detail',
+	async ({ token, tokenUserId, contract }: ProjectDetail, { rejectWithValue }) => {
+		try {
+			const response = await Axios.get(`${API_URL}/get_project_by_contract_number/${tokenUserId}&${contract}`, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: token
+				}
+			});
+
+			return response.data.data;
+		} catch (error: any) {
+			// return custom error message from backend if present
+			if (error.response && error.response.data.status) {
+				return rejectWithValue(error.response.data.status)
+			} else {
+				return rejectWithValue(error.message)
+			}
+		}
+	}
+)
+
+export { getProjectByAssociate, getProjectDetail }
