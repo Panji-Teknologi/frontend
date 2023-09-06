@@ -2,23 +2,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // import actions
-import { getProjectByAssociate } from "../actions/project";
-
-interface Project {
-    contract_number: string
-    associate_id: number
-    name: string
-    master_client_company_id: number
-    client_company_name: string
-    total_price_contract: number
-};
+import { getProjectByAssociate, getProjectDetail } from "../actions/project";
+import { ProjectType, ProjectDetail } from '../../types';
 
 interface StateType {
-    projects: Project[]
+    projects: ProjectType[];
+    projectDetail: ProjectDetail[];
 }
 
 const initialState: StateType = {
-    projects: []
+    projects: [],
+    projectDetail: []
 };
 
 // ==============================|| SLICE - PROJECT ||============================== //
@@ -31,6 +25,9 @@ const project = createSlice({
         (builder) => {
             builder.addCase(getProjectByAssociate.fulfilled, (state, { payload }) => {
                 state.projects = payload;
+            });
+            builder.addCase(getProjectDetail.fulfilled, (state, { payload }) => {
+                state.projectDetail = payload;
             });
         }
 });
