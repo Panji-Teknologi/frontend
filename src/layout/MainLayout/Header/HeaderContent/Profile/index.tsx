@@ -77,19 +77,17 @@ const Profile = () => {
   const signOut = useSignOut();
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const [token] = useCookie("_auth");
   const [value, setValue] = useState(0);
-  const tokenUserId = getUserIdFromToken(token);
   const dispatch = useAppDispatch();
-  const userId = getUserIdFromToken(token);
   const { profiles } = useAppSelector((state: any) => state.profile);
+  const [token] = useCookie('_auth');
+  const tokenUserId = getUserIdFromToken(token);
 
   const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   console.log(profiles, "isi profiles");
-  console.log(userId, "isi user Id");
 
   useEffect(() => {
     dispatch(getUserById({ token, tokenUserId }));

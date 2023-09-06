@@ -1,27 +1,31 @@
-import Axios, { AxiosRequestConfig } from "axios";
+import Axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_URL } from "../../constants/data";
 
-type Token = string
+interface ProjectByAssociate {
+  token: string;
+  tokenUserId: number | null;
+}
 
 const getUserById = createAsyncThunk(
   "user/getUserById",
-  async ({ token, id }: { token: Token; id: number | null }, thunkAPI) => {
-    // Membuat konfigurasi permintaan dengan header token
-    const config: AxiosRequestConfig = {
-      headers: {
-        'Authorization': `${token}`,
-      },
-    };
+  async ({ token, tokenUserId }: ProjectByAssociate, { rejectWithValue }) => {
     try {
-      const response = await Axios.get(`${API_URL}/${id}`, config);
-      if (!response) {
-        throw new Error("Gagal mengambil data pengguna");
-      }
-      const data = await response?.data?.data[0]
-      return data;
+      const response = await Axios.get(`${API_URL}/${tokenUserId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
+
+      return response.data.data[0];
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      // return custom error message from backend if present
+      if (error.response && error.response.data.status) {
+        return rejectWithValue(error.response.data.status);
+      } else {
+        return rejectWithValue(error.message);
+      }
     }
   }
 );
