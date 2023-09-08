@@ -19,6 +19,7 @@ import Tabs from './Tabs';
 import Typography from './Typography';
 import Select from './Select';
 import MenuItem from './MenuItem';
+import Autocomplete from './Autocomplete';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
@@ -41,5 +42,6 @@ export default function ComponentsOverrides(theme: any) {
     Typography(),
     Select(theme),
     MenuItem(theme),
+    Autocomplete
   );
 }

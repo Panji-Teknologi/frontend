@@ -40,7 +40,7 @@ const ProjectDetail = () => {
         <Typography variant="h5">Project Detail</Typography>
       </Stack>
       {projectDetail?.map((project: ProjectDetail, i: number) => (
-        <MainCard key={i} sx={{ mb: 2 }}>
+        <MainCard key={i} sx={{ mb: 3 }} border={false} boxShadow>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={5} md={4} xl={3}>
               <Grid container spacing={3}>
