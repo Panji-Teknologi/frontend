@@ -4,14 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // import actions
 import { getUserById } from "../actions/profile";
 
-interface Profile {
-  associate_id: number;
-  name: string;
-  address: string;
-  job: string;
-  email: string;
-  no_hp: string;
-}
+// types
+import { Profile } from "../../types";
 
 interface StateType {
   profiles: Profile[];
@@ -29,11 +23,10 @@ const profile = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUserById.fulfilled, (state, { payload }) => {
-      console.log("payload profile", payload);
       state.profiles = payload;
     });
   },
 });
 
 export default profile.reducer;
-export const {} = profile.actions;
+export const { } = profile.actions;
