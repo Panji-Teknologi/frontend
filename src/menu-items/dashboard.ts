@@ -1,10 +1,11 @@
 // assets
-import { DashboardOutlined, AuditOutlined } from '@ant-design/icons';
+import { DashboardOutlined, AuditOutlined, MessageOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
   DashboardOutlined,
-  AuditOutlined
+  AuditOutlined,
+  MessageOutlined
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -28,6 +29,14 @@ const dashboard = {
       type: 'item',
       url: '/project',
       icon: icons.AuditOutlined,
+      breadcrumbs: false
+    },
+    {
+      id: 'message',
+      title: 'message',
+      type: 'item',
+      url: '/message',
+      icon: icons.MessageOutlined,
       breadcrumbs: false
     }
   ]

@@ -16,6 +16,7 @@ const Dashboard = Loadable(lazy(() => import('../pages/dashboard')));
 const Project = Loadable(lazy(() => import('../pages/project')));
 const ProjectDetail = Loadable(lazy(() => import('../pages/project/ProjectDetail')));
 const Profile = Loadable(lazy(() => import('../pages/profile')));
+const Message = Loadable(lazy(() => import('../pages/message')));
 
 // ==============================|| ROUTING RENDER ||============================== //
 
@@ -71,6 +72,14 @@ const routes = (isAuthenticated: boolean) => [
         element: (
           <RequireAuth loginPath='/login'>
             <Profile />
+          </RequireAuth>
+        )
+      },
+      {
+        path: 'message',
+        element: (
+          <RequireAuth loginPath='/login'>
+            <Message />
           </RequireAuth>
         )
       },
