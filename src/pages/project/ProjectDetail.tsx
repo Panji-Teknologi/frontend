@@ -68,10 +68,25 @@ const ProjectDetail = () => {
                           </ListItem>
                           <ListItem>
                             <ListItemIcon>
-                              Cycle Date
+                              Step
                             </ListItemIcon>
                             <ListItemSecondaryAction>
-                              <Typography align="right">{dayjs(project.cycle_date).format('DD MMM YYYY')}</Typography>
+                              {/* <Typography align="right">{dayjs(project.cycle_date).format('DD MMM YYYY')}</Typography> */}
+                              <Typography align="right">
+                                {project.project_step_id === 1
+                                  ? "Initial Audit"
+                                  : project.project_step_id === 2
+                                  ? "Surveillance 1"
+                                  : project.project_step_id === 3
+                                  ? "Surveillance 2"
+                                  : project.project_step_id === 4
+                                  ? "Surveillance 3"
+                                  : project.project_step_id === 5
+                                  ? "Surveillance 4"
+                                  : project.project_step_id === 6
+                                  ? "Surveillance 5"
+                                  : null}
+                              </Typography>
                             </ListItemSecondaryAction>
                           </ListItem>
                         </List>
