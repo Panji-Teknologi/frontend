@@ -1,4 +1,4 @@
-import { useRef, useState, ReactNode, SyntheticEvent, useEffect } from "react";
+import { useRef, useState, ReactNode, useEffect } from "react";
 import { useSignOut } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 
@@ -14,8 +14,6 @@ import {
   Paper,
   Popper,
   Stack,
-  Tab,
-  Tabs,
   Typography,
 } from "@mui/material";
 
@@ -23,73 +21,33 @@ import {
 import MainCard from "../../../../../components/MainCard";
 import Transitions from "../../../../../components/@extended/Transitions";
 import ProfileTab from "./ProfileTab";
-import SettingTab from "./SettingTab";
 import { useAppDispatch, useAppSelector } from "../../../../../store";
 import { getUserById } from "../../../../../store/actions/profile";
-import { setToken } from "../../../../../store/reducers/auth";
 
 // assets
 import {
   LogoutOutlined,
-  SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { getUserIdFromToken } from "../../../../../utils/decode-token";
 import useCookie from "../../../../../hooks/useCookie";
 
-interface TabPanelProps {
-  children: ReactNode;
-  index: any;
-  value: any;
-  dir?: string;
-}
-
-// tab panel wrapper
-function TabPanel({ children, value, index, ...other }: TabPanelProps) {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`profile-tabpanel-${index}`}
-      aria-labelledby={`profile-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `profile-tab-${index}`,
-    "aria-controls": `profile-tabpanel-${index}`,
-  };
-}
-
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
 const Profile = () => {
-  const [cookie] = useCookie("_auth");
   const theme = useTheme<any>();
   const anchorRef = useRef<HTMLButtonElement>(null);
   const signOut = useSignOut();
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(0);
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state: any) => state.profile);
-  const { userToken } = useAppSelector((state: any) => state.auth);
-  const userId = getUserIdFromToken(userToken);
+  const { profiles } = useAppSelector((state: any) => state.profile);
+  const [token] = useCookie('_auth');
+  const tokenUserId = getUserIdFromToken(token);
 
   useEffect(() => {
-    if (cookie) {
-      dispatch(setToken(cookie));
-    }
-
-    if (userId) {
-      dispatch(getUserById({ token: userToken, id: userId }));
-    }
-  }, [dispatch]);
+    dispatch(getUserById({ token, tokenUserId }));
+  }, []);
 
   const handleLogout = async () => {
     // logout
@@ -106,10 +64,6 @@ const Profile = () => {
       return;
     }
     setOpen(false);
-  };
-
-  const handleChange = (event: SyntheticEvent<Element, Event>) => {
-    setValue(Number(event.currentTarget));
   };
 
   const iconBackColorOpen = "grey.300";
@@ -131,7 +85,7 @@ const Profile = () => {
       >
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
           <UserOutlined />
-          <Typography variant="subtitle1"> {data?.name}</Typography>
+          <Typography variant="subtitle1"> {profiles?.name}</Typography>
         </Stack>
       </ButtonBase>
       <Popper
@@ -184,9 +138,11 @@ const Profile = () => {
                               style={{ fontSize: 35, color: "#08c" }}
                             />
                             <Stack>
-                              <Typography variant="h6">{data?.name}</Typography>
+                              <Typography variant="h6">
+                                {profiles?.name}
+                              </Typography>
                               <Typography variant="body2" color="textSecondary">
-                                {data?.job}
+                                {profiles?.job}
                               </Typography>
                             </Stack>
                           </Stack>
@@ -203,61 +159,7 @@ const Profile = () => {
                       </Grid>
                     </CardContent>
                     {open && (
-                      <>
-                        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                          <Tabs
-                            variant="fullWidth"
-                            value={value}
-                            onChange={handleChange}
-                            aria-label="profile tabs"
-                          >
-                            <Tab
-                              sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                textTransform: "capitalize",
-                              }}
-                              icon={
-                                <UserOutlined
-                                  style={{
-                                    marginBottom: 0,
-                                    marginRight: "10px",
-                                  }}
-                                />
-                              }
-                              label="Profile"
-                              {...a11yProps(0)}
-                            />
-                            <Tab
-                              sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                textTransform: "capitalize",
-                              }}
-                              icon={
-                                <SettingOutlined
-                                  style={{
-                                    marginBottom: 0,
-                                    marginRight: "10px",
-                                  }}
-                                />
-                              }
-                              label="Setting"
-                              {...a11yProps(1)}
-                            />
-                          </Tabs>
-                        </Box>
-                        <TabPanel value={value} index={0} dir={theme.direction}>
-                          <ProfileTab handleLogout={handleLogout} />
-                        </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
-                          <SettingTab />
-                        </TabPanel>
-                      </>
+                      <ProfileTab handleLogout={handleLogout} />
                     )}
                   </MainCard>
                 </ClickAwayListener>

@@ -19,17 +19,12 @@ const initialState: StateType = {
   success: false, // for monitoring the registration process.
 };
 
-
 // ==============================|| SLICE - AUTH ||============================== //
 
 const auth = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    setToken: (state, action) => {
-      state.userToken = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // register user
     builder.addCase(register.pending, (state) => {
@@ -60,5 +55,5 @@ const auth = createSlice({
   },
 });
 
-export const { setToken } = auth.actions;
 export default auth.reducer;
+export const {} = auth.actions;
