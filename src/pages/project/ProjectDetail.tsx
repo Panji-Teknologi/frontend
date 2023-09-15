@@ -70,10 +70,10 @@ const ProjectDetail = () => {
           <MainCard key={i} sx={{ mb: 2 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={5} md={4} xl={3}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} >
                   <Grid item xs={12}>
-                    <MainCard>
-                      <Grid container spacing={3}>
+                    <MainCard sx={{maxHeight: 250, minHeight: 250, overflow: 'auto'}}>
+                      <Grid container spacing={3} >
                         <Grid item xs={12}>
                           <Stack spacing={2.5} alignItems="center">
                             <AuditOutlined
@@ -123,7 +123,6 @@ const ProjectDetail = () => {
                             <ListItem>
                               <ListItemIcon>Step</ListItemIcon>
                               <ListItemSecondaryAction>
-                                {/* <Typography align="right">{dayjs(project.cycle_date).format('DD MMM YYYY')}</Typography> */}
                                 <Typography align="right">
                                   {project.project_step_id === 1
                                     ? "Initial Audit"
@@ -151,7 +150,7 @@ const ProjectDetail = () => {
               <Grid item xs={12} sm={7} md={8} xl={9}>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <MainCard title="Data Standards">
+                    <MainCard title="Data Standards" sx={{maxHeight: 250, minHeight: 250, overflow: 'auto'}}>
                       <List sx={{ py: 0 }}>
                         {project.data_standard?.map((standard, i) => (
                           <ListItem key={i} divider={!matchDownMD}>
