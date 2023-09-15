@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 // assets
-import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined, } from '@ant-design/icons';
 
 interface ProfileTabProps {
   handleLogout: () => void
@@ -15,6 +16,7 @@ interface ProfileTabProps {
 
 const ProfileTab = ({ handleLogout }: ProfileTabProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -24,30 +26,14 @@ const ProfileTab = ({ handleLogout }: ProfileTabProps) => {
 
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32, color: theme.palette.grey[500] } }}>
-      <ListItemButton selected={selectedIndex === 0} onClick={() => handleListItemClick(0)}>
-        <ListItemIcon>
-          <EditOutlined />
-        </ListItemIcon>
-        <ListItemText primary="Edit Profile" />
-      </ListItemButton>
-      <ListItemButton selected={selectedIndex === 1} onClick={() => handleListItemClick(1)}>
+      <ListItemButton selected={selectedIndex === 1} onClick={() => {
+        handleListItemClick(1)
+        navigate('/profile');
+      }}>
         <ListItemIcon>
           <UserOutlined />
         </ListItemIcon>
         <ListItemText primary="View Profile" />
-      </ListItemButton>
-
-      <ListItemButton selected={selectedIndex === 3} onClick={() => handleListItemClick(3)}>
-        <ListItemIcon>
-          <ProfileOutlined />
-        </ListItemIcon>
-        <ListItemText primary="Social Profile" />
-      </ListItemButton>
-      <ListItemButton selected={selectedIndex === 4} onClick={() => handleListItemClick(4)}>
-        <ListItemIcon>
-          <WalletOutlined />
-        </ListItemIcon>
-        <ListItemText primary="Billing" />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 2} onClick={handleLogout}>
         <ListItemIcon>

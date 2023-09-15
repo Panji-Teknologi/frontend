@@ -52,6 +52,7 @@ const ProjectDetail = () => {
         <ButtonBack />
         <Typography variant="h5">Project Detail</Typography>
       </Stack>
+      
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
         const expirationDate = dayjs(project.expired_date);

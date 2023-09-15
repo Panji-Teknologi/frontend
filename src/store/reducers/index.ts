@@ -7,9 +7,10 @@ import auth from './auth';
 import bank from './bank';
 import project from './project';
 import profile from "./profile";
+import chat from "./chat";
 
 // ==============================|| COMBINE REDUCERS ||============================== //
 
-const reducers = combineReducers({ menu, auth, bank, project, profile });
+const reducers = combineReducers({ menu, auth, bank, project, profile, chat });
 
 export default reducers;

@@ -5,6 +5,7 @@ import Footer from "../../layout/MinimalLayout/Footer";
 import Guide from "../../layout/MinimalLayout/Guide";
 import About from "../../layout/MinimalLayout/About";
 import AuthFooter from "../../components/cards/AuthFooter";
+import StatsSection from "../../layout/MinimalLayout/Stats";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <Navbar />
       <Hero />
       <Guide />
+      <StatsSection/>
       <About />
       <Footer />
       <Box
