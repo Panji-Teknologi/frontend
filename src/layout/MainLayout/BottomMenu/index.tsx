@@ -27,6 +27,8 @@ const Bottommenu = () => {
   }, [pathname]);
 
   const handlenavigation = (event: any, value: number) => {
+    event.preventDefault();
+
     setValue(value)
 
     // to dashboard page

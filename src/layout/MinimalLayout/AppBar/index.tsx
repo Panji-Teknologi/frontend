@@ -31,17 +31,17 @@ const DrawerAppBar = () => {
 
   const toggleDrawer =
     (anchor: string, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent): void => {
-      if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
+      (event: React.KeyboardEvent | React.MouseEvent): void => {
+        if (
+          event.type === "keydown" &&
+          ((event as React.KeyboardEvent).key === "Tab" ||
+            (event as React.KeyboardEvent).key === "Shift")
+        ) {
+          return;
+        }
 
-      setMobileMenu({ ...mobileMenu, [anchor]: open });
-    };
+        setMobileMenu({ ...mobileMenu, [anchor]: open });
+      };
 
   const list = (anchor: string) => (
     <Box
@@ -71,7 +71,7 @@ const DrawerAppBar = () => {
     </Box>
   );
 
-  const NavLink = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  const NavLink = styled(Typography)(() => ({
     fontSize: "14px",
     color: "#33334d",
     fontWeight: "bold",
