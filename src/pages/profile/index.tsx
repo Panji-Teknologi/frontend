@@ -38,8 +38,10 @@ const Profile = () => {
   const tokenUserId = getUserIdFromToken(token);
 
   useEffect(() => {
-    dispatch(getUserById({ token, tokenUserId }))
-  }, []);
+    if (tokenUserId !== null) {
+      dispatch(getUserById({ token, tokenUserId }))
+    }
+  }, [tokenUserId]);
 
   return (
     <MainCard border={false} boxShadow>
@@ -56,8 +58,8 @@ const Profile = () => {
                     <Stack spacing={2.5} alignItems="center">
                       <Avatar alt="Avatar 1" />
                       <Stack spacing={0.5} alignItems="center">
-                        <Typography variant="h5">{profiles.name}</Typography>
-                        <Typography color="secondary">{profiles.job}</Typography>
+                        <Typography variant="h5">{profiles?.name}</Typography>
+                        <Typography color="secondary">{profiles?.job}</Typography>
                       </Stack>
                     </Stack>
                   </Grid>
@@ -72,7 +74,7 @@ const Profile = () => {
                           <Typography variant='caption' sx={{ ml: 1 }}>Verifivation Date</Typography>
                         </ListItemIcon>
                         <ListItemSecondaryAction>
-                          <Typography align="right">{dayjs(profiles.tgl_diverifikasi).format("DD MMM YYYY")}</Typography>
+                          <Typography align="right">{dayjs(profiles?.tgl_diverifikasi).format("DD MMM YYYY")}</Typography>
                         </ListItemSecondaryAction>
                       </ListItem>
                     </List>
@@ -80,7 +82,7 @@ const Profile = () => {
                   {/* <Grid item xs={12}>
                     <Divider />
                   </Grid>
-                  <img alt={profiles.name} src={profiles.term_of_service_signature} /> */}
+                  <img alt={profiles?.name} src={profiles?.term_of_service_signature} /> */}
                 </Grid>
               </MainCard>
             </Grid>

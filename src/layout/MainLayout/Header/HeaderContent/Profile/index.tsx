@@ -22,15 +22,13 @@ import MainCard from "../../../../../components/MainCard";
 import Transitions from "../../../../../components/@extended/Transitions";
 import ProfileTab from "./ProfileTab";
 import { useAppDispatch, useAppSelector } from "../../../../../store";
-import { getUserById } from "../../../../../store/actions/profile";
 
 // assets
 import {
   LogoutOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { getUserIdFromToken } from "../../../../../utils/decode-token";
-import useCookie from "../../../../../hooks/useCookie";
+import { clearProfiles } from "../../../../../store/reducers/profile";
 
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
@@ -39,19 +37,16 @@ const Profile = () => {
   const anchorRef = useRef<HTMLButtonElement>(null);
   const signOut = useSignOut();
   const navigate = useNavigate();
-  const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { profiles } = useAppSelector((state: any) => state.profile);
-  const [token] = useCookie('_auth');
-  const tokenUserId = getUserIdFromToken(token);
 
-  useEffect(() => {
-    dispatch(getUserById({ token, tokenUserId }));
-  }, []);
+  const { profiles } = useAppSelector((state: any) => state.profile);
+
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleLogout = async () => {
     // logout
     signOut();
+    dispatch(clearProfiles(null));
     navigate("/login");
   };
 

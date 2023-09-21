@@ -7,6 +7,7 @@ import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 
 // assets
 import { LogoutOutlined, UserOutlined, } from '@ant-design/icons';
+import { useAppSelector } from '../../../../../store';
 
 interface ProfileTabProps {
   handleLogout: () => void
@@ -17,6 +18,7 @@ interface ProfileTabProps {
 const ProfileTab = ({ handleLogout }: ProfileTabProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { profiles } = useAppSelector((state: any) => state.profile);
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -26,7 +28,7 @@ const ProfileTab = ({ handleLogout }: ProfileTabProps) => {
 
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32, color: theme.palette.grey[500] } }}>
-      <ListItemButton selected={selectedIndex === 1} onClick={() => {
+      {profiles?.is_valid === 1 && <ListItemButton selected={selectedIndex === 1} onClick={() => {
         handleListItemClick(1)
         navigate('/profile');
       }}>
@@ -34,7 +36,7 @@ const ProfileTab = ({ handleLogout }: ProfileTabProps) => {
           <UserOutlined />
         </ListItemIcon>
         <ListItemText primary="View Profile" />
-      </ListItemButton>
+      </ListItemButton>}
       <ListItemButton selected={selectedIndex === 2} onClick={handleLogout}>
         <ListItemIcon>
           <LogoutOutlined />

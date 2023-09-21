@@ -9,28 +9,34 @@ import MainCard from '../../components/MainCard';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getProjectByAssociate } from '../../store/actions/project';
 import { getUserIdFromToken } from '../../utils/decode-token';
+import { getUserById } from '../../store/actions/profile';
 import useCookie from '../../hooks/useCookie';
 import BarChartContract from './BarChartContract';
 import idrFormat from '../../utils/idrFormat';
+import EmptyUserCard from '../../components/cards/EmptyUserCard';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { projects } = useAppSelector((state: any) => state.project);
+  const { profiles } = useAppSelector((state: any) => state.profile);
 
   const [token] = useCookie('_auth');
   const tokenUserId = getUserIdFromToken(token);
 
   useEffect(() => {
-    dispatch(getProjectByAssociate({ token, tokenUserId }))
-  }, []);
+    if (tokenUserId !== null) {
+      dispatch(getUserById({ token, tokenUserId }))
+      dispatch(getProjectByAssociate({ token, tokenUserId }))
+    }
+  }, [tokenUserId]);
 
   const priceContract: number[] = projects?.map((project: any) => project.total_price_contract);
   const companyNames: string[] = projects?.map((project: any) => project.client_company_name);
-  const totalPrice = projects?.reduce((acc: number, curr: any) => acc + curr.total_price_contract, 0)
+  const totalPrice = projects?.reduce((acc: number, curr: any) => acc + curr.total_price_contract, 0);
 
-  return (
+  return profiles?.is_valid === 1 ? (
     <Grid container spacing={2.5} pb={5}>
       {/* row 1 */}
       <Grid item xs={12} sx={{ mb: -2.25 }}>
@@ -68,6 +74,13 @@ const Dashboard = () => {
           <BarChartContract priceContract={priceContract} companyNames={companyNames} />
         </MainCard>
       </Grid>
+    </Grid>
+  ) : (
+    <Grid container spacing={2.5} pb={5}>
+      <Grid item xs={12} sx={{ mb: -2.25 }}>
+        <Typography variant="h5">Dashboard</Typography>
+      </Grid>
+      <EmptyUserCard title='Your account has not been verified, please contact admin' />
     </Grid>
   )
 }

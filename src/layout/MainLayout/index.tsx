@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -11,22 +10,24 @@ import Drawer from './Drawer';
 import Header from './Header';
 import navigation from '../../menu-items';
 import Breadcrumbs from '../../components/@extended/Breadcrumbs';
-
-// types
-import { openDrawer } from '../../store/reducers/menu';
 import Bottommenu from './BottomMenu';
 import MainCard from '../../components/MainCard';
+
+import { useAppSelector, useAppDispatch } from '../../store';
+import { openDrawer } from '../../store/reducers/menu';
+
+// assets
 import { WhatsAppOutlined } from '@ant-design/icons';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme<any>();
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownXS = useMediaQuery(theme.breakpoints.down(512));
 
-  const { drawerOpen } = useSelector((state: any) => state.menu);
+  const { drawerOpen } = useAppSelector((state: any) => state.menu);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
@@ -61,8 +62,8 @@ const MainLayout = () => {
               width: { xs: '100%', sm: 'auto' },
               position: 'fixed',
               zIndex: 9,
-              right: { xs: 0, sm: 16 },
-              bottom: { xs: 0, sm: '25%' },
+              right: { xs: 0, sm: 25 },
+              bottom: { xs: 0, sm: 25 },
               borderRadius: 50,
               p: 1
             }}
