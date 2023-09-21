@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
-
 // material-ui
 import { Box, List, Typography } from '@mui/material';
 
 // project import
 import NavItem from './NavItem';
+import { useAppSelector } from '../../../../../store';
 
 interface NavGroupProps {
   item: any
@@ -13,10 +12,12 @@ interface NavGroupProps {
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
 const NavGroup = ({ item }: NavGroupProps) => {
-  const menu = useSelector((state: any) => state.menu);
-  const { drawerOpen } = menu;
+  const { drawerOpen } = useAppSelector((state: any) => state.menu);
+  const { profiles } = useAppSelector((state: any) => state.profile);
 
-  const navCollapse = item.children?.map((menuItem: any) => {
+  const itemsnav = profiles?.is_valid === 0 ? item.children?.filter((nav: any) => nav.id === 'dashboard') : item.children;
+
+  const navCollapse = itemsnav?.map((menuItem: any) => {
     switch (menuItem.type) {
       case 'collapse':
         return (

@@ -23,6 +23,9 @@ import { useSignIn } from 'react-auth-kit';
 import AnimateButton from '../../../components/@extended/AnimateButton';
 import { login, setUpRecaptcha } from '../../../store/actions/auth';
 import { useAppDispatch, useAppSelector } from '../../../store';
+import { getUserById } from '../../../store/actions/profile';
+import { getUserIdFromToken } from '../../../utils/decode-token';
+import { getProjectByAssociate } from '../../../store/actions/project';
 
 // assets
 import { CheckCircleOutlined } from '@ant-design/icons';
@@ -106,18 +109,23 @@ const AuthLogin = () => {
             }
 
             if (verified.status) {
-              const res = await dispatch(login(data))
+              const res = await dispatch(login(data));
+              const token = res.payload?.data;
+              const tokenUserId = getUserIdFromToken(token);
 
               if (res.type === LOGIN_FULFILLED) {
                 // set data login in cookie
                 signIn({
-                  token: res.payload?.data,
+                  token,
                   expiresIn: 43200,
                   tokenType: 'Bearer',
                   authState: {
                     phone: values.no_hp
                   }
                 });
+
+                dispatch(getUserById({ token, tokenUserId }))
+                dispatch(getProjectByAssociate({ token, tokenUserId }))
 
                 // navigate to dashboard page
                 navigate('/dashboard');
