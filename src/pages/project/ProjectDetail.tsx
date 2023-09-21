@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // material ui
@@ -36,8 +36,7 @@ interface Item {
 
 const ToggleableItem: React.FC<{ item: Item }> = ({ item }) => {
   const [value, setValue] = useState<number>(item.handle_by);
-  console.log(value, 'isi value');
-  
+  // console.log(value, 'isi value');
 
   const handleToggle = () => {
     const newValue = value === 1 ? 2 : 1; // Toggle antara nilai 1 dan 2
@@ -72,7 +71,6 @@ const ProjectDetail = () => {
     }
   }, [userId, contract]);
 
-
   return (
     <>
       <Stack mb={2} direction="row" justifyContent="space-between">
@@ -83,11 +81,16 @@ const ProjectDetail = () => {
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
         const expirationDate = dayjs(project.expired_date);
+        console.log(project.expired_date, 'exp date');
+        
+        const diffInMonths = currentDate.diff(expirationDate, "month");
         let colorClass = "";
+        // console.log(expirationDate, 'isi expiration date')
+        // console.log(currentDate, 'isi currentdate')
 
-        if (currentDate.diff(expirationDate, "month") === 1) {
+        if (diffInMonths === 0 || diffInMonths === 1 ) {
           colorClass = "red";
-        } else if (currentDate.diff(expirationDate, "month") === 3) {
+        } else if (diffInMonths === 2 || diffInMonths === 3) {
           colorClass = "orange";
         } else {
           colorClass = "green";
@@ -177,7 +180,10 @@ const ProjectDetail = () => {
                                   onChange={handleChange}
                                   inputProps={{ "aria-label": "controlled" }}
                                 /> */}
-                                <ToggleableItem key={project.project_id} item={project} />
+                                <ToggleableItem
+                                  key={project.project_id}
+                                  item={project}
+                                />
                               </ListItemSecondaryAction>
                             </ListItem>
                           </List>
