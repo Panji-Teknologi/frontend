@@ -1,3 +1,3 @@
-const API_URL = 'http://localhost:5455/api/v1/associate';
+const API_URL = 'https://api-associate.manajemensistem.com/api/v1/associate';
 
 export { API_URL }
