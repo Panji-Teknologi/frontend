@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // material ui
@@ -12,6 +12,7 @@ import {
   ListItemSecondaryAction,
   useMediaQuery,
 } from "@mui/material";
+import Switch from "@mui/material/Switch";
 import { useTheme } from "@mui/material/styles";
 
 // project import
@@ -27,6 +28,30 @@ import ButtonBack from "../../components/@extended/ButtonBack";
 import { AuditOutlined } from "@ant-design/icons";
 import idrFormat from "../../utils/idrFormat";
 import dayjs from "dayjs";
+
+interface Item {
+  contract_number: string;
+  handle_by: number;
+}
+
+const ToggleableItem: React.FC<{ item: Item }> = ({ item }) => {
+  const [value, setValue] = useState<number>(item.handle_by);
+  // console.log(value, 'isi value');
+
+  const handleToggle = () => {
+    const newValue = value === 1 ? 2 : 1; // Toggle antara nilai 1 dan 2
+    setValue(newValue);
+  };
+
+  return (
+    <div>
+      {/* <span>Associate</span> */}
+      <Switch checked={value === 2} onChange={handleToggle} color="primary" />
+      {/* <span>Admin</span> */}
+      {value === 2 ? "Admin" : "Associate"}
+    </div>
+  );
+};
 
 const ProjectDetail = () => {
   const theme = useTheme<any>();
@@ -52,15 +77,20 @@ const ProjectDetail = () => {
         <ButtonBack />
         <Typography variant="h5">Project Detail</Typography>
       </Stack>
-      
+
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
         const expirationDate = dayjs(project.expired_date);
+        console.log(project.expired_date, 'exp date');
+        
+        const diffInMonths = currentDate.diff(expirationDate, "month");
         let colorClass = "";
+        // console.log(expirationDate, 'isi expiration date')
+        // console.log(currentDate, 'isi currentdate')
 
-        if (currentDate.diff(expirationDate, "month") === 1) {
+        if (diffInMonths === 0 || diffInMonths === 1 ) {
           colorClass = "red";
-        } else if (currentDate.diff(expirationDate, "month") === 3) {
+        } else if (diffInMonths === 2 || diffInMonths === 3) {
           colorClass = "orange";
         } else {
           colorClass = "green";
@@ -70,10 +100,12 @@ const ProjectDetail = () => {
           <MainCard key={i} sx={{ mb: 2 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={5} md={4} xl={3}>
-                <Grid container spacing={3} >
+                <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <MainCard sx={{maxHeight: 250, minHeight: 250, overflow: 'auto'}}>
-                      <Grid container spacing={3} >
+                    <MainCard
+                      sx={{ maxHeight: 350, minHeight: 350, overflow: "auto" }}
+                    >
+                      <Grid container spacing={3}>
                         <Grid item xs={12}>
                           <Stack spacing={2.5} alignItems="center">
                             <AuditOutlined
@@ -140,6 +172,20 @@ const ProjectDetail = () => {
                                 </Typography>
                               </ListItemSecondaryAction>
                             </ListItem>
+                            <ListItem>
+                              <ListItemIcon>Handle By</ListItemIcon>
+                              <ListItemSecondaryAction>
+                                {/* <Switch
+                                  checked={checked}
+                                  onChange={handleChange}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                /> */}
+                                <ToggleableItem
+                                  key={project.project_id}
+                                  item={project}
+                                />
+                              </ListItemSecondaryAction>
+                            </ListItem>
                           </List>
                         </Grid>
                       </Grid>
@@ -150,7 +196,10 @@ const ProjectDetail = () => {
               <Grid item xs={12} sm={7} md={8} xl={9}>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <MainCard title="Data Standards" sx={{maxHeight: 250, minHeight: 250, overflow: 'auto'}}>
+                    <MainCard
+                      title="Data Standards"
+                      sx={{ maxHeight: 350, minHeight: 350, overflow: "auto" }}
+                    >
                       <List sx={{ py: 0 }}>
                         {project.data_standard?.map((standard, i) => (
                           <ListItem key={i} divider={!matchDownMD}>
