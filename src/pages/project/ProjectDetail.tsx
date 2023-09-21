@@ -36,7 +36,6 @@ interface Item {
 
 const ToggleableItem: React.FC<{ item: Item }> = ({ item }) => {
   const [value, setValue] = useState<number>(item.handle_by);
-  // console.log(value, 'isi value');
 
   const handleToggle = () => {
     const newValue = value === 1 ? 2 : 1; // Toggle antara nilai 1 dan 2
@@ -45,9 +44,7 @@ const ToggleableItem: React.FC<{ item: Item }> = ({ item }) => {
 
   return (
     <div>
-      {/* <span>Associate</span> */}
       <Switch checked={value === 2} onChange={handleToggle} color="primary" />
-      {/* <span>Admin</span> */}
       {value === 2 ? "Admin" : "Associate"}
     </div>
   );
@@ -81,14 +78,11 @@ const ProjectDetail = () => {
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
         const expirationDate = dayjs(project.expired_date);
-        console.log(project.expired_date, 'exp date');
-        
+
         const diffInMonths = currentDate.diff(expirationDate, "month");
         let colorClass = "";
-        // console.log(expirationDate, 'isi expiration date')
-        // console.log(currentDate, 'isi currentdate')
 
-        if (diffInMonths === 0 || diffInMonths === 1 ) {
+        if (diffInMonths === 0 || diffInMonths === 1) {
           colorClass = "red";
         } else if (diffInMonths === 2 || diffInMonths === 3) {
           colorClass = "orange";
@@ -159,16 +153,16 @@ const ProjectDetail = () => {
                                   {project.project_step_id === 1
                                     ? "Initial Audit"
                                     : project.project_step_id === 2
-                                    ? "Surveillance 1"
-                                    : project.project_step_id === 3
-                                    ? "Surveillance 2"
-                                    : project.project_step_id === 4
-                                    ? "Surveillance 3"
-                                    : project.project_step_id === 5
-                                    ? "Surveillance 4"
-                                    : project.project_step_id === 6
-                                    ? "Surveillance 5"
-                                    : null}
+                                      ? "Surveillance 1"
+                                      : project.project_step_id === 3
+                                        ? "Surveillance 2"
+                                        : project.project_step_id === 4
+                                          ? "Surveillance 3"
+                                          : project.project_step_id === 5
+                                            ? "Surveillance 4"
+                                            : project.project_step_id === 6
+                                              ? "Surveillance 5"
+                                              : null}
                                 </Typography>
                               </ListItemSecondaryAction>
                             </ListItem>

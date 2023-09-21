@@ -18,8 +18,6 @@ const getUserById = createAsyncThunk(
         },
       });
 
-      console.log('RES : ', response)
-
       return response.data.data[0];
     } catch (error: any) {
       // return custom error message from backend if present

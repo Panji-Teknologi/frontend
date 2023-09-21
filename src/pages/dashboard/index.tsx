@@ -6,11 +6,7 @@ import { Box, Grid, Typography, Stack } from '@mui/material';
 // project import
 import AnalyticCard from '../../components/cards/statistics/AnalyticCard';
 import MainCard from '../../components/MainCard';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { getProjectByAssociate } from '../../store/actions/project';
-import { getUserIdFromToken } from '../../utils/decode-token';
-import { getUserById } from '../../store/actions/profile';
-import useCookie from '../../hooks/useCookie';
+import { useAppSelector } from '../../store';
 import BarChartContract from './BarChartContract';
 import idrFormat from '../../utils/idrFormat';
 import EmptyUserCard from '../../components/cards/EmptyUserCard';
@@ -18,19 +14,8 @@ import EmptyUserCard from '../../components/cards/EmptyUserCard';
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const Dashboard = () => {
-  const dispatch = useAppDispatch();
   const { projects } = useAppSelector((state: any) => state.project);
   const { profiles } = useAppSelector((state: any) => state.profile);
-
-  const [token] = useCookie('_auth');
-  const tokenUserId = getUserIdFromToken(token);
-
-  useEffect(() => {
-    if (tokenUserId !== null) {
-      dispatch(getUserById({ token, tokenUserId }))
-      dispatch(getProjectByAssociate({ token, tokenUserId }))
-    }
-  }, [tokenUserId]);
 
   const priceContract: number[] = projects?.map((project: any) => project.total_price_contract);
   const companyNames: string[] = projects?.map((project: any) => project.client_company_name);

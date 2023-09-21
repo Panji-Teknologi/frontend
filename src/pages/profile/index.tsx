@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 // material ui
 import {
   Chip,
@@ -18,30 +16,18 @@ import {
 import dayjs from 'dayjs';
 
 // project import
-import { getUserIdFromToken } from '../../utils/decode-token';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { getUserById } from '../../store/actions/profile';
-import useCookie from '../../hooks/useCookie';
 import MainCard from '../../components/MainCard'
+import PersonalInfo from './PersonalInfo';
+
+import { useAppSelector } from '../../store';
 
 // assets
 import { CalendarOutlined } from '@ant-design/icons';
-import PersonalInfo from './PersonalInfo';
 
 // ==============================|| PROFILE ||============================== //
 
 const Profile = () => {
-  const dispatch = useAppDispatch();
   const { profiles } = useAppSelector((state: any) => state.profile);
-
-  const [token] = useCookie('_auth');
-  const tokenUserId = getUserIdFromToken(token);
-
-  useEffect(() => {
-    if (tokenUserId !== null) {
-      dispatch(getUserById({ token, tokenUserId }))
-    }
-  }, [tokenUserId]);
 
   return (
     <MainCard border={false} boxShadow>
@@ -79,10 +65,6 @@ const Profile = () => {
                       </ListItem>
                     </List>
                   </Grid>
-                  {/* <Grid item xs={12}>
-                    <Divider />
-                  </Grid>
-                  <img alt={profiles?.name} src={profiles?.term_of_service_signature} /> */}
                 </Grid>
               </MainCard>
             </Grid>

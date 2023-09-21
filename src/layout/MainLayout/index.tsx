@@ -12,9 +12,13 @@ import navigation from '../../menu-items';
 import Breadcrumbs from '../../components/@extended/Breadcrumbs';
 import Bottommenu from './BottomMenu';
 import MainCard from '../../components/MainCard';
+import useCookie from '../../hooks/useCookie';
 
 import { useAppSelector, useAppDispatch } from '../../store';
 import { openDrawer } from '../../store/reducers/menu';
+import { getUserIdFromToken } from '../../utils/decode-token';
+import { getUserById } from '../../store/actions/profile';
+import { getProjectByAssociate } from '../../store/actions/project';
 
 // assets
 import { WhatsAppOutlined } from '@ant-design/icons';
@@ -29,12 +33,22 @@ const MainLayout = () => {
 
   const { drawerOpen } = useAppSelector((state: any) => state.menu);
 
+  const [token] = useCookie('_auth');
+  const tokenUserId = getUserIdFromToken(token);
+
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
   const handleDrawerToggle = () => {
     setOpen(!open);
     dispatch(openDrawer({ drawerOpen: !open }));
   };
+
+  useEffect(() => {
+    if (tokenUserId !== null) {
+      dispatch(getUserById({ token, tokenUserId }))
+      dispatch(getProjectByAssociate({ token, tokenUserId }))
+    }
+  }, [tokenUserId]);
 
   // set media wise responsive drawer
   useEffect(() => {
@@ -59,11 +73,11 @@ const MainLayout = () => {
         <Slide direction='right' in={true} mountOnEnter unmountOnExit>
           <MainCard
             sx={{
-              width: { xs: '100%', sm: 'auto' },
+              width: { xs: 'auto' },
               position: 'fixed',
               zIndex: 9,
-              right: { xs: 0, sm: 25 },
-              bottom: { xs: 0, sm: 25 },
+              right: { xs: 15, sm: 25 },
+              bottom: { xs: 75, sm: 25 },
               borderRadius: 50,
               p: 1
             }}
