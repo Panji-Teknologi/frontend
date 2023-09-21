@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 // material-ui
 import { Box, Grid, Typography, Stack } from '@mui/material';
 

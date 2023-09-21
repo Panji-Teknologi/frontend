@@ -1,9 +1,9 @@
 // material-ui
-import { alpha } from '@mui/material/styles';
+import { alpha, Theme } from '@mui/material/styles';
 
 // ==============================|| OVERRIDES - SELECT ||============================== //
 
-export default function Select(theme: any) {
+export default function Select(theme: Theme) {
   return {
     MuiSelect: {
       styleOverrides: {
