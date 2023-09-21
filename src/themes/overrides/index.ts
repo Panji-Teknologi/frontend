@@ -1,6 +1,9 @@
 // third-party
 import { merge } from 'lodash';
 
+// material-ui
+import { Theme } from '@mui/material/styles';
+
 // project import
 import Badge from './Badge';
 import Button from './Button';
@@ -17,10 +20,13 @@ import Tab from './Tab';
 import TableCell from './TableCell';
 import Tabs from './Tabs';
 import Typography from './Typography';
+import Select from './Select';
+import MenuItem from './MenuItem';
+import Autocomplete from './Autocomplete';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
-export default function ComponentsOverrides(theme: any) {
+export default function ComponentsOverrides(theme: Theme) {
   return merge(
     Button(theme),
     Badge(theme),
@@ -36,6 +42,9 @@ export default function ComponentsOverrides(theme: any) {
     Tab(theme),
     TableCell(theme),
     Tabs(),
-    Typography()
+    Typography(),
+    Select(theme),
+    MenuItem(theme),
+    Autocomplete
   );
 }
