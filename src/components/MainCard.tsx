@@ -55,6 +55,7 @@ const MainCard = forwardRef<HTMLDivElement, MainCardProps>(
         ref={ref}
         {...others}
         sx={{
+          //  maxHeight: 250, minHeight: 250, overflow: "auto",
           border: border ? '1px solid' : 'none',
           borderRadius: 2,
           borderColor: theme.palette.mode === 'dark' ? theme.palette.divider : theme.palette.grey.A800,
