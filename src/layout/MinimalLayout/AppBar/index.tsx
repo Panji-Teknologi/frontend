@@ -71,7 +71,7 @@ const DrawerAppBar = () => {
     </Box>
   );
 
-  const NavLink = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  const NavLink = styled(Typography)(({ }: { theme: Theme }) => ({
     fontSize: "14px",
     color: "#33334d",
     fontWeight: "bold",
