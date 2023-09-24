@@ -1,30 +1,40 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Toolbar, useMediaQuery } from '@mui/material';
+import { Box, IconButton, Slide, Toolbar, useMediaQuery, Link } from '@mui/material';
 
 // project import
 import Drawer from './Drawer';
 import Header from './Header';
 import navigation from '../../menu-items';
 import Breadcrumbs from '../../components/@extended/Breadcrumbs';
-
-// types
-import { openDrawer } from '../../store/reducers/menu';
 import Bottommenu from './BottomMenu';
+import MainCard from '../../components/MainCard';
+import useCookie from '../../hooks/useCookie';
+
+import { useAppSelector, useAppDispatch } from '../../store';
+import { openDrawer } from '../../store/reducers/menu';
+import { getUserIdFromToken } from '../../utils/decode-token';
+import { getUserById } from '../../store/actions/profile';
+import { getProjectByAssociate } from '../../store/actions/project';
+
+// assets
+import { WhatsAppOutlined } from '@ant-design/icons';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
-  const dispatch = useDispatch();
-  const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const theme = useTheme<any>();
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownXS = useMediaQuery(theme.breakpoints.down(512));
 
-  const { drawerOpen } = useSelector((state: any) => state.menu);
+  const { drawerOpen } = useAppSelector((state: any) => state.menu);
+
+  const [token] = useCookie('_auth');
+  const tokenUserId = getUserIdFromToken(token);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
@@ -32,6 +42,13 @@ const MainLayout = () => {
     setOpen(!open);
     dispatch(openDrawer({ drawerOpen: !open }));
   };
+
+  useEffect(() => {
+    if (tokenUserId !== null) {
+      dispatch(getUserById({ token, tokenUserId }))
+      dispatch(getProjectByAssociate({ token, tokenUserId }))
+    }
+  }, [tokenUserId]);
 
   // set media wise responsive drawer
   useEffect(() => {
@@ -53,6 +70,27 @@ const MainLayout = () => {
       <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
         <Toolbar />
         <Breadcrumbs navigation={navigation} title />
+        <Slide direction='right' in={true} mountOnEnter unmountOnExit>
+          <MainCard
+            sx={{
+              width: { xs: 'auto' },
+              position: 'fixed',
+              zIndex: 9,
+              right: { xs: 15, sm: 25 },
+              bottom: { xs: 75, sm: 25 },
+              borderRadius: 50,
+              p: 1
+            }}
+            content={false}
+            shadow={theme.customShadows.z1}
+            boxShadow
+            border={false}
+          >
+            <IconButton LinkComponent={Link} href='https://wa.me/6281218227597?text=Halo' target='_blank'>
+              <WhatsAppOutlined style={{ color: 'green', fontSize: 30 }} />
+            </IconButton>
+          </MainCard>
+        </Slide>
         <Outlet />
       </Box>
       {matchDownXS && <Bottommenu />}

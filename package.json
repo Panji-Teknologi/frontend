@@ -23,7 +23,6 @@
     "apexcharts": "^3.42.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
-    "emoji-picker-react": "^4.5.1",
     "firebase": "^10.1.0",
     "formik": "^2.4.2",
     "framer-motion": "^10.15.0",

@@ -8,11 +8,11 @@ import { getUserById } from "../actions/profile";
 import { Profile } from "../../types";
 
 interface StateType {
-  profiles: Profile[];
+  profiles: Profile | null;
 }
 
 const initialState: StateType = {
-  profiles: [],
+  profiles: null,
 };
 
 // ==============================|| SLICE - PROJECT ||============================== //
@@ -20,7 +20,12 @@ const initialState: StateType = {
 const profile = createSlice({
   name: "profile",
   initialState,
-  reducers: {},
+  reducers: {
+    // clearProfiles
+    clearProfiles(state, { payload }) {
+      state.profiles = payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getUserById.fulfilled, (state, { payload }) => {
       state.profiles = payload;
@@ -29,4 +34,4 @@ const profile = createSlice({
 });
 
 export default profile.reducer;
-export const { } = profile.actions;
+export const { clearProfiles } = profile.actions;

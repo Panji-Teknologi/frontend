@@ -99,7 +99,7 @@ const ProjectDetail = () => {
 
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
-        const expirationDate = dayjs(project.expired_date);
+        const expirationDate = dayjs(project.expired_date); 
         const diffInMonths = currentDate.diff(expirationDate, "month");
         let colorClass = "";
 
@@ -174,16 +174,16 @@ const ProjectDetail = () => {
                                   {project.project_step_id === 1
                                     ? "Initial Audit"
                                     : project.project_step_id === 2
-                                    ? "Surveillance 1"
-                                    : project.project_step_id === 3
-                                    ? "Surveillance 2"
-                                    : project.project_step_id === 4
-                                    ? "Surveillance 3"
-                                    : project.project_step_id === 5
-                                    ? "Surveillance 4"
-                                    : project.project_step_id === 6
-                                    ? "Surveillance 5"
-                                    : null}
+                                      ? "Surveillance 1"
+                                      : project.project_step_id === 3
+                                        ? "Surveillance 2"
+                                        : project.project_step_id === 4
+                                          ? "Surveillance 3"
+                                          : project.project_step_id === 5
+                                            ? "Surveillance 4"
+                                            : project.project_step_id === 6
+                                              ? "Surveillance 5"
+                                              : null}
                                 </Typography>
                               </ListItemSecondaryAction>
                             </ListItem>

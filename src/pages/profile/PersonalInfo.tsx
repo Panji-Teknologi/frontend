@@ -59,8 +59,8 @@ const PersonalInfo = ({ profile }: PersonalInfoProps) => {
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          name: Yup.string().max(255).required('First Name is required.'),
-          job: Yup.string().max(255).required('Last Name is required.'),
+          name: Yup.string().max(50).required('First Name is required.'),
+          job: Yup.string().max(30).required('Last Name is required.'),
           email: Yup.string().email('Invalid email address.').max(255).required('Email is required.'),
           bank_code: Yup.string().required('Bank code is required.'),
           bank_atas_nama: Yup.string().required('Bank Name is required.'),

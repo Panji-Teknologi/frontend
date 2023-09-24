@@ -1,6 +1,9 @@
 // third-party
 import { merge } from 'lodash';
 
+// material-ui
+import { Theme } from '@mui/material/styles';
+
 // project import
 import Badge from './Badge';
 import Button from './Button';
@@ -23,7 +26,7 @@ import Autocomplete from './Autocomplete';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
-export default function ComponentsOverrides(theme: any) {
+export default function ComponentsOverrides(theme: Theme) {
   return merge(
     Button(theme),
     Badge(theme),
