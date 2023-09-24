@@ -64,3 +64,9 @@ export type Profile = {
   tgl_diverifikasi: string
   token: string
 }
+
+export type HandleByProject = {
+  associate_id: number;
+  project_id: number;
+  handle_by: number;
+}
