@@ -16,7 +16,7 @@ import Switch from "@mui/material/Switch";
 import { useTheme } from "@mui/material/styles";
 
 // project import
-import { getProjectDetail } from "../../store/actions/project";
+import { getProjectDetail, handleByProject } from "../../store/actions/project";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { ProjectDetail } from "../../types";
 
@@ -29,29 +29,7 @@ import { AuditOutlined } from "@ant-design/icons";
 import idrFormat from "../../utils/idrFormat";
 import dayjs from "dayjs";
 
-interface Item {
-  contract_number: string;
-  handle_by: number;
-}
-
-const ToggleableItem: React.FC<{ item: Item }> = ({ item }) => {
-  const [value, setValue] = useState<number>(item.handle_by);
-  // console.log(value, 'isi value');
-
-  const handleToggle = () => {
-    const newValue = value === 1 ? 2 : 1; // Toggle antara nilai 1 dan 2
-    setValue(newValue);
-  };
-
-  return (
-    <div>
-      {/* <span>Associate</span> */}
-      <Switch checked={value === 2} onChange={handleToggle} color="primary" />
-      {/* <span>Admin</span> */}
-      {value === 2 ? "Admin" : "Associate"}
-    </div>
-  );
-};
+const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 const ProjectDetail = () => {
   const theme = useTheme<any>();
@@ -62,6 +40,47 @@ const ProjectDetail = () => {
   const dispatch = useAppDispatch();
   const { projectDetail } = useAppSelector((state: any) => state.project);
   const [token] = useCookie("_auth");
+
+  interface Item {
+    associate_id: number;
+    project_id: number;
+    handle_by: number;
+  }
+
+  const ToggleableItem: React.FC<{ item: Item }> = ({ item }) => {
+    const [associate_id] = useState<number>(item.associate_id);
+    const [project_id] = useState<number>(item.project_id);
+    const [handle_by, sethandle_by] = useState<number>(item.handle_by);
+
+    const handleToggle = () => {
+      const newValue = handle_by === 1 ? 2 : 1; // Toggle antara nilai 1 dan 2
+      sethandle_by(newValue);
+      dispatch(
+        handleByProject({
+          token,
+          associate_id,
+          project_id,
+          handle_by: newValue,
+        })
+      );
+    };
+
+    useEffect(() => {
+      sethandle_by(item.handle_by);
+    }, [item.handle_by]);
+
+    return (
+      <div>
+        <Switch
+          {...label}
+          checked={handle_by === 2}
+          onChange={handleToggle}
+          color="primary"
+        />
+        {handle_by === 2 ? "Admin" : "Associate"}
+      </div>
+    );
+  };
 
   useEffect(() => {
     if (userId !== undefined && contract !== undefined) {
@@ -81,14 +100,10 @@ const ProjectDetail = () => {
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
         const expirationDate = dayjs(project.expired_date);
-        console.log(project.expired_date, 'exp date');
-        
         const diffInMonths = currentDate.diff(expirationDate, "month");
         let colorClass = "";
-        // console.log(expirationDate, 'isi expiration date')
-        // console.log(currentDate, 'isi currentdate')
 
-        if (diffInMonths === 0 || diffInMonths === 1 ) {
+        if (diffInMonths === 0 || diffInMonths === 1) {
           colorClass = "red";
         } else if (diffInMonths === 2 || diffInMonths === 3) {
           colorClass = "orange";
@@ -175,11 +190,6 @@ const ProjectDetail = () => {
                             <ListItem>
                               <ListItemIcon>Handle By</ListItemIcon>
                               <ListItemSecondaryAction>
-                                {/* <Switch
-                                  checked={checked}
-                                  onChange={handleChange}
-                                  inputProps={{ "aria-label": "controlled" }}
-                                /> */}
                                 <ToggleableItem
                                   key={project.project_id}
                                   item={project}
