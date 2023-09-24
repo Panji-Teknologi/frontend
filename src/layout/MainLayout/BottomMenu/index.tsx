@@ -26,7 +26,7 @@ const Bottommenu = () => {
     }
   }, [pathname]);
 
-  const handlenavigation = (event: any, value: number) => {
+  const handlenavigation = (_event: any, value: number) => {
     setValue(value)
 
     // to dashboard page
