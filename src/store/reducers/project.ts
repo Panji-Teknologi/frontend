@@ -8,14 +8,14 @@ import { ProjectType, ProjectDetail, HandleByProject } from '../../types';
 interface StateType {
     projects: ProjectType[];
     projectDetail: ProjectDetail[];
-    handleByProject: HandleByProject[]
+    handleBy: HandleByProject[]
     
 }
 
 const initialState: StateType = {
     projects: [],
     projectDetail: [],
-    handleByProject: []
+    handleBy: []
 };
 
 
@@ -34,7 +34,7 @@ const project = createSlice({
                 state.projectDetail = payload;
             });
             builder.addCase(handleByProject.fulfilled, (state, { payload }) => {
-                state.handleByProject = payload;
+                state.handleBy = payload;
             });
         }
 });
