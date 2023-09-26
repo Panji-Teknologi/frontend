@@ -1,6 +1,7 @@
 
 // ==============================|| OVERRIDES - MENU ITEM ||============================== //
 
+
 export default function MenuItem() {
     return {
         MuiMenuItem: {
