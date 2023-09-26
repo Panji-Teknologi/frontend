@@ -44,7 +44,7 @@ export default function ComponentsOverrides(theme: Theme) {
     Tabs(),
     Typography(),
     Select(theme),
-    MenuItem(theme),
+    MenuItem(),
     Autocomplete
   );
 }
