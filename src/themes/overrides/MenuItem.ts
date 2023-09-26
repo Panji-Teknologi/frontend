@@ -3,7 +3,7 @@ import { Theme } from '@mui/material/styles';
 
 // ==============================|| OVERRIDES - MENU ITEM ||============================== //
 
-export default function MenuItem(theme: Theme) {
+export default function MenuItem(_theme: Theme) {
     return {
         MuiMenuItem: {
             styleOverrides: {
