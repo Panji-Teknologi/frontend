@@ -14,7 +14,7 @@ interface ProjectDetail {
   contract: string;
 }
 
-interface HandleByProject {
+interface HandleBy {
   token: string;
   associate_id: number;
   project_id: number;
@@ -84,7 +84,7 @@ const handleByProject = createAsyncThunk(
       associate_id,
       project_id,
       handle_by,
-    }: HandleByProject,
+    }: HandleBy,
     { rejectWithValue }
   ) => {
     try {

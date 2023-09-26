@@ -51,10 +51,21 @@ const ProjectDetail = () => {
     const [associate_id] = useState<number>(item.associate_id);
     const [project_id] = useState<number>(item.project_id);
     const [handle_by, sethandle_by] = useState<number>(item.handle_by);
+    const [loading, setLoading] = useState<string>();
 
     const handleToggle = () => {
-      const newValue = handle_by === 1 ? 2 : 1; // Toggle antara nilai 1 dan 2
+      console.log(handle_by, "handle by");
+
+      if (userId !== undefined && contract !== undefined) {
+        dispatch(
+          getProjectDetail({ token, tokenUserId: Number(userId), contract })
+        );
+      }
+      setLoading("Loading...");
+
+      const newValue = handle_by == 1 ? 2 : 1; // Toggle antara nilai 1 dan 2
       sethandle_by(newValue);
+
       dispatch(
         handleByProject({
           token,
@@ -63,22 +74,49 @@ const ProjectDetail = () => {
           handle_by: newValue,
         })
       );
+      setLoading("Loading...");
+
+      if (userId !== undefined && contract !== undefined) {
+        dispatch(
+          getProjectDetail({ token, tokenUserId: Number(userId), contract })
+        );
+      }
     };
 
-    useEffect(() => {
-      sethandle_by(item.handle_by);
-    }, [item.handle_by]);
+    // useEffect(() => {
+    //   sethandle_by(item.handle_by);
+    // }, [item.handle_by]);
 
     return (
-      <div>
-        <Switch
-          {...label}
-          checked={handle_by === 2}
-          onChange={handleToggle}
-          color="primary"
-        />
-        {handle_by === 2 ? "Admin" : "Associate"}
-      </div>
+      <>
+        {loading ? (
+          loading
+        ) : (
+          <>
+            {handle_by == 1 ? (
+              <div>
+                <Switch
+                  {...label}
+                  checked={false}
+                  onChange={handleToggle}
+                  color="primary"
+                />
+                Associate
+              </div>
+            ) : (
+              <div>
+                <Switch
+                  {...label}
+                  checked={true}
+                  onChange={handleToggle}
+                  color="primary"
+                />
+                Associate
+              </div>
+            )}
+          </>
+        )}
+      </>
     );
   };
 
@@ -99,7 +137,7 @@ const ProjectDetail = () => {
 
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
-        const expirationDate = dayjs(project.expired_date); 
+        const expirationDate = dayjs(project.expired_date);
         const diffInMonths = currentDate.diff(expirationDate, "month");
         let colorClass = "";
 
@@ -174,16 +212,16 @@ const ProjectDetail = () => {
                                   {project.project_step_id === 1
                                     ? "Initial Audit"
                                     : project.project_step_id === 2
-                                      ? "Surveillance 1"
-                                      : project.project_step_id === 3
-                                        ? "Surveillance 2"
-                                        : project.project_step_id === 4
-                                          ? "Surveillance 3"
-                                          : project.project_step_id === 5
-                                            ? "Surveillance 4"
-                                            : project.project_step_id === 6
-                                              ? "Surveillance 5"
-                                              : null}
+                                    ? "Surveillance 1"
+                                    : project.project_step_id === 3
+                                    ? "Surveillance 2"
+                                    : project.project_step_id === 4
+                                    ? "Surveillance 3"
+                                    : project.project_step_id === 5
+                                    ? "Surveillance 4"
+                                    : project.project_step_id === 6
+                                    ? "Surveillance 5"
+                                    : null}
                                 </Typography>
                               </ListItemSecondaryAction>
                             </ListItem>
