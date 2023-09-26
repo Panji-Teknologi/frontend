@@ -18,7 +18,7 @@ import './assets/third-party/react-table.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AuthProvider authType={'cookie'}
+    <AuthProvider authType={'localstorage'}
       authName={'_auth'}
       cookieDomain={window.location.hostname}
       cookieSecure={false}>
