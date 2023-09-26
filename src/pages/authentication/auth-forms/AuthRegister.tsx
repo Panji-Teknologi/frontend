@@ -346,8 +346,6 @@ const AuthRegister = () => {
                       type="file"
                       name="ktp_image"
                       onChange={(e: FileEvent) => {
-                        console.log('e.target.files[0]', e.target.files[0]);
-
                         setFieldValue('ktp_image', e.target.files[0])
                         setFileSelected(e.target.files[0])
                       }}

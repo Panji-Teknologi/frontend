@@ -72,8 +72,6 @@ const PersonalInfo = ({ profile }: PersonalInfoProps) => {
         })}
         onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            console.log("Values : ", values);
-
             setStatus({ success: false });
             setSubmitting(false);
           } catch (err: any) {
