@@ -25,6 +25,7 @@ const Footer = () => {
     },
   }));
 
+
   const FooterLink = styled("span")(() => ({
     fontSize: "16px",
     // color: "#7A7A7E",
