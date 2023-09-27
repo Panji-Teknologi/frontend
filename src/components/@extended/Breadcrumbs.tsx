@@ -102,6 +102,4 @@ const Breadcrumbs = ({ navigation, title, ...others }: BreadcrumbsTypes) => {
   return breadcrumbContent;
 };
 
-
-
 export default Breadcrumbs;

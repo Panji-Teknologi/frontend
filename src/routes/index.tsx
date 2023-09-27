@@ -1,19 +1,21 @@
 import { lazy } from 'react';
+import { RequireAuth } from 'react-auth-kit';
 
 // project import
 import Loadable from '../components/Loadable';
 import MainLayout from '../layout/MainLayout';
 import MinimalLayout from '../layout/MinimalLayout';
-import ProtectedRoutes from './ProtectedRoutes';
 import { Navigate } from 'react-router-dom';
 import NotFoundPage from '../pages/NotFoundPage';
 
 // render - pages
 const AuthLogin = Loadable(lazy(() => import('../pages/authentication/Login')));
-const AuthRegister = Loadable(lazy(() => import('../pages/authentication/Register')));
+const AuthPhone = Loadable(lazy(() => import('../pages/authentication/Register')));
 
 const Dashboard = Loadable(lazy(() => import('../pages/dashboard')));
-const History = Loadable(lazy(() => import('../pages/history')));
+const Project = Loadable(lazy(() => import('../pages/project')));
+const ProjectDetail = Loadable(lazy(() => import('../pages/project/ProjectDetail')));
+const Profile = Loadable(lazy(() => import('../pages/profile')));
 
 // ==============================|| ROUTING RENDER ||============================== //
 
@@ -37,25 +39,41 @@ const routes = (isAuthenticated: boolean) => [
       },
       {
         path: 'register',
-        element: isAuthenticated ? <Navigate to="/dashboard" replace /> : <AuthRegister />
+        element: isAuthenticated ? <Navigate to="/dashboard" replace /> : <AuthPhone />
       },
       // ======== Authenticated ========
       {
         path: 'dashboard',
         element: (
-          <ProtectedRoutes isSignedIn={isAuthenticated}>
+          <RequireAuth loginPath='/login'>
             <Dashboard />
-          </ProtectedRoutes>
+          </RequireAuth>
         )
       },
       {
-        path: 'history',
+        path: 'project',
         element: (
-          <ProtectedRoutes isSignedIn={isAuthenticated}>
-            <History />
-          </ProtectedRoutes>
+          <RequireAuth loginPath='/login'>
+            <Project />
+          </RequireAuth>
         )
-      }
+      },
+      {
+        path: 'project/:userId/:contract',
+        element: (
+          <RequireAuth loginPath='/login'>
+            <ProjectDetail />
+          </RequireAuth>
+        )
+      },
+      {
+        path: 'profile',
+        element: (
+          <RequireAuth loginPath='/login'>
+            <Profile />
+          </RequireAuth>
+        )
+      },
     ]
   }
 ]

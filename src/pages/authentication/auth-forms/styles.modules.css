@@ -1,0 +1,11 @@
+.signature-wrapper {
+  position: relative;
+  max-width: 395px;
+  height: 200px;
+}
+
+.signature {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

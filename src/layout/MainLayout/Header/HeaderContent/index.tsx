@@ -1,16 +1,18 @@
 // material-ui
+import { useTheme } from '@mui/material/styles';
 import { Box, useMediaQuery } from '@mui/material';
 
 // project import
 import Search from './Search';
 import Profile from './Profile';
 import Notification from './Notification';
-import MobileSection from './MobileSection';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
 const HeaderContent = () => {
+  const theme = useTheme();
   const matchesXs = useMediaQuery((theme: any) => theme.breakpoints.down('md'));
+  const matchDown512 = useMediaQuery(theme.breakpoints.down(512));
 
   return (
     <>
@@ -18,8 +20,7 @@ const HeaderContent = () => {
       {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
 
       <Notification />
-      {!matchesXs && <Profile />}
-      {matchesXs && <MobileSection />}
+      {!matchDown512 && <Profile />}
     </>
   );
 };
