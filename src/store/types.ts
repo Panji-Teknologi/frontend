@@ -7,3 +7,9 @@ export const REGISTER_PENDING = "auth/register/pending"
 export const LOGIN_FULFILLED = "auth/login/fulfilled"
 export const LOGIN_REJECTED = "auth/login/rejected"
 export const LOGIN_PENDING = "auth/login/pending"
+
+
+// PROFILE UPDATE
+export const UPDATE_PROFILE_FULFILLED = "user/update/fulfilled"
+export const UPDATE_PROFILE_REJECTED = "user/update/rejected"
+export const UPDATE_PROFILE_PENDING = "user/update/pending"
