@@ -1,5 +1,11 @@
+//react
+import { Link } from "react-scroll";
+
+//material ui
 import { styled, Typography, Theme } from "@mui/material";
 import { Box, Container } from "@mui/system";
+
+//import
 import fbIcon from "../../../assets/images/fbicon.png";
 import twitterIcon from "../../../assets/images/twittericon.png";
 import linkedinIcon from "../../../assets/images/linkedinicon.png";
@@ -46,7 +52,7 @@ const Footer = () => {
   }));
 
   return (
-    <Box sx={{ py: 10, backgroundColor: "#f4f6f8" }}>
+    <Box id="section5" sx={{ py: 10, backgroundColor: "#f4f6f8" }}>
       <CustomContainer>
         <Box>
           <NavbarLogo src={logoImg} alt="logo" />
@@ -103,15 +109,12 @@ const Footer = () => {
             Navigations
           </Typography>
 
-          <FooterLink>Home</FooterLink>
-          <br />
-          <FooterLink>About</FooterLink>
-          <br />
-          <FooterLink>Services</FooterLink>
-          <br />
-          <FooterLink>Listed</FooterLink>
-          <br />
-          <FooterLink>Contact</FooterLink>
+            <Link to="section1" smooth={true} duration={500} style={{fontWeight:'500', fontSize:15, cursor: "pointer" }} >Home</Link><br/>
+            <Link to="section2" smooth={true} duration={500} style={{fontWeight:'500', fontSize:15, cursor: "pointer" }} >About</Link><br/>
+            <Link to="section3" smooth={true} duration={500} style={{fontWeight:'500', fontSize:15, cursor: "pointer" }} >Listed</Link><br/>
+            <Link to="section4" smooth={true} duration={500} style={{fontWeight:'500', fontSize:15, cursor: "pointer" }} >Services</Link><br/>
+            <Link to="section5" smooth={true} duration={500} style={{fontWeight:'500', fontSize:15, cursor: "pointer" }} >Contact</Link>
+          
         </Box>
 
         <Box>

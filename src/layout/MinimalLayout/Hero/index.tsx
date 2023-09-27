@@ -33,7 +33,7 @@ const Hero = () => {
 
   return (
     <>
-      <Box
+      <Box id= "section1"
         sx={{
           minHeight: "100vh",
           backgroundColor: "#f4f6f8",
