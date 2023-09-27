@@ -1,9 +1,9 @@
 // material-ui
-import { alpha } from '@mui/material/styles';
+import { Theme, alpha } from '@mui/material/styles';
 
 // ==============================|| OVERRIDES - OUTLINED INPUT ||============================== //
 
-export default function OutlinedInput(theme) {
+export default function OutlinedInput(theme: Theme) {
   return {
     MuiOutlinedInput: {
       styleOverrides: {

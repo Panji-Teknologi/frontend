@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Stack, Typography } from '@mui/material';
 
 // project import
+// import AuthPhone from './auth-forms/AuthPhone';
 import AuthRegister from './auth-forms/AuthRegister';
 import AuthWrapper from './AuthWrapper';
 
@@ -21,6 +22,7 @@ const Register = () => (
         </Stack>
       </Grid>
       <Grid item xs={12}>
+        {/* <AuthPhone /> */}
         <AuthRegister />
       </Grid>
     </Grid>
