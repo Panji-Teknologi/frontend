@@ -4,7 +4,6 @@ import { Link } from "react-scroll";
 
 //material ui
 import Box from "@mui/material/Box";
-// import { Link } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
@@ -37,17 +36,17 @@ const DrawerAppBar = () => {
 
   const toggleDrawer =
     (anchor: string, open: boolean) =>
-      (event: React.KeyboardEvent | React.MouseEvent): void => {
-        if (
-          event.type === "keydown" &&
-          ((event as React.KeyboardEvent).key === "Tab" ||
-            (event as React.KeyboardEvent).key === "Shift")
-        ) {
-          return;
-        }
+    (event: React.KeyboardEvent | React.MouseEvent): void => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
 
-        setMobileMenu({ ...mobileMenu, [anchor]: open });
-      };
+      setMobileMenu({ ...mobileMenu, [anchor]: open });
+    };
 
   const list = (anchor: string) => (
     <Box
@@ -125,10 +124,6 @@ const DrawerAppBar = () => {
   }));
 
   return (
-    // <Box sx={{ display: "flex" }}>
-    //   <CssBaseline />
-    //   <AppBar component="nav" color="transparent" sx={{ boxShadow: "none" }}>
-    //     <Toolbar>
     <Box sx={{ backgroundColor: "#f4f6f8" }}>
       <NavbarContainer>
         <Box
@@ -148,17 +143,52 @@ const DrawerAppBar = () => {
             >
               {list("left")}
             </Drawer>
-            <Link to="/">
+            <a href="/">
               <NavbarLogo src={logoImg} alt="logo" />
-            </Link>
+            </a>
           </Box>
 
           <NavbarLinksBox>
-            <Link to="section1" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Home</Link>
-            <Link to="section2" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >About</Link>
-            <Link to="section3" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Listed</Link>
-            <Link to="section4" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Services</Link>
-            <Link to="section5" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Contact</Link>
+            <Link
+              to="section1"
+              smooth={true}
+              duration={500}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+            >
+              Home
+            </Link>
+            <Link
+              to="section2"
+              smooth={true}
+              duration={500}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+            >
+              About
+            </Link>
+            <Link
+              to="section3"
+              smooth={true}
+              duration={500}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+            >
+              Listed
+            </Link>
+            <Link
+              to="section4"
+              smooth={true}
+              duration={500}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+            >
+              Services
+            </Link>
+            <Link
+              to="section5"
+              smooth={true}
+              duration={500}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+            >
+              Contact
+            </Link>
           </NavbarLinksBox>
         </Box>
 
@@ -170,27 +200,20 @@ const DrawerAppBar = () => {
             gap: "1rem",
           }}
         >
-          <Link to="/login">
+          <a style={{ textDecoration: "none" }} href="/login">
             <NavLink variant="body2">Login</NavLink>
-          </Link>
+          </a>
 
-          <Link to="/register">
+          <a style={{ textDecoration: "none" }} href="/register">
             <CustomButton
               backgroundColor="#ff6600"
               color="#fff"
               buttonText="Sign Up"
             />
-          </Link>
+          </a>
         </Box>
       </NavbarContainer>
     </Box>
-    //     </Toolbar>
-    //   </AppBar>
-
-    //   <Box component="main">
-    //     <Toolbar />
-    //   </Box>
-    // </Box>
   );
 };
 
