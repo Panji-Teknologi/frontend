@@ -70,7 +70,7 @@ const PersonalInfo = ({ profile }: PersonalInfoProps) => {
             .required('Phone number is required'),
           address: Yup.string().min(50, 'Address to short.').required('Address is required'),
         })}
-        onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={(_values, { setErrors, setStatus, setSubmitting }) => {
           try {
             setStatus({ success: false });
             setSubmitting(false);
