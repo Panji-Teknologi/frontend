@@ -43,26 +43,25 @@ export type ProjectDetail = {
 }
 
 export type Profile = {
-  address: string
   associate_id: number
+  name: string
+  address: string
   bank_atas_nama: string
   bank_code: string
-  create_date: Date | null
-  diverifikasi_oleh: number
   email: string
-  is_valid: number
   job: string
   ktp_image: File
-  master_sales_employee_id: number
-  name: string
   no_hp: string
   no_rek_associate: string
-  password: string
-  signature: string
-  sumber_informasi: number
-  term_of_service_signature: File
-  tgl_diverifikasi: string
-  token: string
+  diverifikasi_oleh?: number
+  is_valid?: number
+  create_date?: Date | null
+  master_sales_employee_id?: number
+  signature?: string
+  sumber_informasi?: number
+  term_of_service_signature?: File
+  tgl_diverifikasi?: string
+  token?: string
 }
 
 export type HandleByProject = {

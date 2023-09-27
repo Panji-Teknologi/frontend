@@ -24,6 +24,11 @@ const profile = createSlice({
     // clearProfiles
     clearProfiles(state, { payload }) {
       state.profiles = payload
+    },
+
+    // update profile
+    profileUpdate(state, { payload }) {
+      state.profiles = payload
     }
   },
   extraReducers: (builder) => {
@@ -34,4 +39,4 @@ const profile = createSlice({
 });
 
 export default profile.reducer;
-export const { clearProfiles } = profile.actions;
+export const { clearProfiles, profileUpdate } = profile.actions;

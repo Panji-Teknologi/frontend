@@ -18,14 +18,19 @@ import {
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { toast } from 'react-hot-toast';
 
 // import 
 import { getBankDestination } from '../../store/actions/bank';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { Profile } from '../../types';
+import { UPDATE_PROFILE_FULFILLED, UPDATE_PROFILE_REJECTED } from '../../store/types';
+import { updateProfile } from '../../store/actions/profile';
+import { profileUpdate } from '../../store/reducers/profile';
 
 // components
 import MainCard from '../../components/MainCard';
+import useCookie from '../../hooks/useCookie';
 
 // ==============================|| PROFILE - PERSONAL INFO ||============================== //
 
@@ -36,6 +41,8 @@ interface PersonalInfoProps {
 const PersonalInfo = ({ profile }: PersonalInfoProps) => {
   const dispatch = useAppDispatch();
   const { banks } = useAppSelector((state: any) => state.bank);
+
+  const [token] = useCookie('_auth');
 
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() - 18);
@@ -48,36 +55,66 @@ const PersonalInfo = ({ profile }: PersonalInfoProps) => {
     <MainCard content={false} title="Personal Information" sx={{ '& .MuiInputLabel-root': { fontSize: '0.875rem' } }}>
       <Formik
         initialValues={{
-          name: profile.name,
-          job: profile.job,
-          email: profile.email,
-          bank_code: profile.bank_code,
-          address: profile.address,
-          no_hp: profile.no_hp,
-          bank_atas_nama: profile.bank_atas_nama,
-          no_rek_associate: profile.no_rek_associate,
+          name: profile?.name,
+          job: profile?.job,
+          email: profile?.email,
+          bank_code: profile?.bank_code,
+          address: profile?.address,
+          no_hp: profile?.no_hp,
+          bank_atas_nama: profile?.bank_atas_nama,
+          no_rek_associate: profile?.no_rek_associate,
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          name: Yup.string().max(50).required('First Name is required.'),
-          job: Yup.string().max(30).required('Last Name is required.'),
-          email: Yup.string().email('Invalid email address.').max(255).required('Email is required.'),
-          bank_code: Yup.string().required('Bank code is required.'),
-          bank_atas_nama: Yup.string().required('Bank Name is required.'),
-          no_rek_associate: Yup.string().required('Account Number is required.'),
-          no_hp: Yup.number()
-            .test('len', 'Contact should be exactly 10 digit', (val) => val?.toString().length === 10)
-            .required('Phone number is required'),
-          address: Yup.string().min(50, 'Address to short.').required('Address is required'),
+          name: Yup.string().max(50),
+          job: Yup.string().max(30),
+          email: Yup.string().email('Invalid email address.').max(255),
+          bank_code: Yup.string(),
+          bank_atas_nama: Yup.string(),
+          no_rek_associate: Yup.string(),
+          no_hp: Yup.string().max(15).test('+62', 'The number must start with +62', (value) => {
+            const searchTerm = '+62';
+            const indexOfFirst = value?.indexOf(searchTerm);
+
+            return indexOfFirst === 0
+          }),
+          address: Yup.string(),
         })}
-        onSubmit={(_values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            setStatus({ success: false });
-            setSubmitting(false);
+            const data = {
+              associate_id: profile.associate_id,
+              name: values.name,
+              job: values.job,
+              email: values.email,
+              bank_code: values.bank_code,
+              address: values.address,
+              no_hp: values.no_hp,
+              bank_atas_nama: values.bank_atas_nama,
+              no_rek_associate: values.no_rek_associate,
+              ktp_image: profile.ktp_image,
+              token
+            }
+
+            const response = await dispatch(updateProfile(data));
+
+            if (response.type === UPDATE_PROFILE_FULFILLED) {
+              dispatch(profileUpdate(response.payload));
+              setStatus({ success: true });
+              setSubmitting(false);
+              toast.success("Your profile update has been successful");
+            }
+
+            if (response.type === UPDATE_PROFILE_REJECTED) {
+              toast.error(response.payload as any);
+              setStatus({ success: false });
+              setSubmitting(false);
+            }
           } catch (err: any) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
             setSubmitting(false);
+            toast.error("Your profile update failed");
           }
         }}
       >
@@ -237,18 +274,18 @@ const PersonalInfo = ({ profile }: PersonalInfoProps) => {
             <Box sx={{ p: 2.5 }}>
               {/* ============ Address ============ */}
               <TextField
+                id="address"
+                name="address"
                 multiline
                 rows={5}
                 fullWidth
                 value={values.address}
-                name="address"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                id="personal-address"
                 placeholder="address"
               />
               {touched.address && errors.address && (
-                <FormHelperText error id="personal-address-helper">
+                <FormHelperText error id="address-helper">
                   {errors.address}
                 </FormHelperText>
               )}
@@ -256,8 +293,8 @@ const PersonalInfo = ({ profile }: PersonalInfoProps) => {
                 <Button variant="outlined" color="secondary">
                   Cancel
                 </Button>
-                <Button disabled={isSubmitting || Object.keys(errors).length !== 0} type="submit" variant="contained">
-                  Save
+                <Button disabled={isSubmitting} type="submit" variant="contained">
+                  {isSubmitting ? 'Saving' : 'Save'}
                 </Button>
               </Stack>
             </Box>
