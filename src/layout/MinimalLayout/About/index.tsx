@@ -70,7 +70,7 @@ const About: React.FC = () => {
 
   return (
     <>
-      <Box
+      <Box id="section4"
         sx={{
           minHeight: "100vh",
           backgroundColor: "#fff",

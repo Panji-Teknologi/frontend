@@ -11,7 +11,7 @@ import CustomButton from "../../../components/CustomButton/CustomButton";
 const StatsSection = () => {
   return (
     // <div className="section bg-secondary text-light py-3 py-lg-5 px-2 px-lg-4" id="stats">
-    <Box
+    <Box id="section3"
       sx={{
         bgcolor: "#33334d",
         color: "text.disabled",

@@ -80,7 +80,7 @@ const Guide = () => {
 
   return (
     <>
-      <Box
+      <Box id="section2"
         sx={{
           display: "flex",
           flexDirection: "column",

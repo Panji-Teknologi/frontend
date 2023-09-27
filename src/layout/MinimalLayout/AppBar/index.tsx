@@ -1,6 +1,10 @@
+//react
 import { useState } from "react";
+import { Link } from "react-scroll";
+
+//material ui
 import Box from "@mui/material/Box";
-import { Link } from "@mui/material";
+// import { Link } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
@@ -19,6 +23,8 @@ import {
   styled,
   Theme,
 } from "@mui/material";
+
+//import
 import logoImg from "../../../assets/images/logo.png";
 import CustomButton from "../../../components/CustomButton/CustomButton";
 
@@ -70,7 +76,6 @@ const DrawerAppBar = () => {
       </List>
     </Box>
   );
-
 
   const NavLink = styled(Typography)(() => ({
     fontSize: "14px",
@@ -143,17 +148,17 @@ const DrawerAppBar = () => {
             >
               {list("left")}
             </Drawer>
-            <Link href="/">
+            <Link to="/">
               <NavbarLogo src={logoImg} alt="logo" />
             </Link>
           </Box>
 
           <NavbarLinksBox>
-            <NavLink variant="body2">Home</NavLink>
-            <NavLink variant="body2">About</NavLink>
-            <NavLink variant="body2">Services</NavLink>
-            <NavLink variant="body2">Listed</NavLink>
-            <NavLink variant="body2">Contact</NavLink>
+            <Link to="section1" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Home</Link>
+            <Link to="section2" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >About</Link>
+            <Link to="section3" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Listed</Link>
+            <Link to="section4" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Services</Link>
+            <Link to="section5" smooth={true} duration={500} style={{fontWeight:'700', fontSize:16, cursor: "pointer" }} >Contact</Link>
           </NavbarLinksBox>
         </Box>
 
@@ -165,11 +170,11 @@ const DrawerAppBar = () => {
             gap: "1rem",
           }}
         >
-          <Link href="/login">
+          <Link to="/login">
             <NavLink variant="body2">Login</NavLink>
           </Link>
 
-          <Link href="/register">
+          <Link to="/register">
             <CustomButton
               backgroundColor="#ff6600"
               color="#fff"
