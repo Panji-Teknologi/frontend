@@ -153,7 +153,7 @@ const DrawerAppBar = () => {
               to="section1"
               smooth={true}
               duration={500}
-              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer", color: "#33334d", }}
             >
               Home
             </Link>
@@ -161,7 +161,7 @@ const DrawerAppBar = () => {
               to="section2"
               smooth={true}
               duration={500}
-              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer", color: "#33334d", }}
             >
               About
             </Link>
@@ -169,7 +169,7 @@ const DrawerAppBar = () => {
               to="section3"
               smooth={true}
               duration={500}
-              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer", color: "#33334d", }}
             >
               Listed
             </Link>
@@ -177,7 +177,7 @@ const DrawerAppBar = () => {
               to="section4"
               smooth={true}
               duration={500}
-              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer", color: "#33334d", }}
             >
               Services
             </Link>
@@ -185,7 +185,7 @@ const DrawerAppBar = () => {
               to="section5"
               smooth={true}
               duration={500}
-              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer" }}
+              style={{ fontWeight: "700", fontSize: 14, cursor: "pointer", color: "#33334d", }}
             >
               Contact
             </Link>
