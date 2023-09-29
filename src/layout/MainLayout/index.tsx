@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useSignOut } from "react-auth-kit";
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -19,6 +20,8 @@ import { openDrawer } from '../../store/reducers/menu';
 import { getUserIdFromToken } from '../../utils/decode-token';
 import { getUserById } from '../../store/actions/profile';
 import { getProjectByAssociate } from '../../store/actions/project';
+import { clearProfiles } from '../../store/reducers/profile';
+import { GET_PROJECTS_REJECTED, GET_USER_REJECTED } from '../../store/types';
 
 // assets
 import { WhatsAppOutlined } from '@ant-design/icons';
@@ -27,6 +30,8 @@ import { WhatsAppOutlined } from '@ant-design/icons';
 
 const MainLayout = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
+  const signOut = useSignOut();
   const theme = useTheme<any>();
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownXS = useMediaQuery(theme.breakpoints.down(512));
@@ -45,8 +50,17 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (tokenUserId !== null) {
-      dispatch(getUserById({ token, tokenUserId }))
-      dispatch(getProjectByAssociate({ token, tokenUserId }))
+      async function init() {
+        const responseUser = await dispatch(getUserById({ token, tokenUserId }))
+        const responseProject = await dispatch(getProjectByAssociate({ token, tokenUserId }))
+
+        if (responseUser.type === GET_USER_REJECTED && responseProject.type === GET_PROJECTS_REJECTED) {
+          signOut();
+          dispatch(clearProfiles(null));
+          navigate('/login')
+        }
+      }
+      init()
     }
   }, [tokenUserId]);
 
