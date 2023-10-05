@@ -34,7 +34,7 @@ const CardProject = ({ project }: CardProjectProps) => {
   const matchDownSM = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
 
   const handleToProjectDetail = () => {
-    navigate(`/project/${project.associate_id}/${project.contract_number}`);
+    navigate(`/project/${project.associate_id}?contract_id=${project.contract_number}`);
   }
 
   return (
