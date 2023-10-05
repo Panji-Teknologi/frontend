@@ -59,7 +59,7 @@ const routes = (isAuthenticated: boolean) => [
         )
       },
       {
-        path: 'project/:userId/:contract',
+        path: 'project/:userId',
         element: (
           <RequireAuth loginPath='/login'>
             <ProjectDetail />

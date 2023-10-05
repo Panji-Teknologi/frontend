@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 // material ui
 import {
@@ -33,7 +33,9 @@ const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 const ProjectDetail = () => {
   const theme = useTheme<any>();
-  const { userId, contract } = useParams();
+  const { userId } = useParams();
+  const [searchParasm] = useSearchParams();
+  const contract = searchParasm.get('contract_id') as string
   const matchDownMD = useMediaQuery((theme: any) =>
     theme.breakpoints.down("md")
   );
@@ -212,16 +214,16 @@ const ProjectDetail = () => {
                                   {project.project_step_id === 1
                                     ? "Initial Audit"
                                     : project.project_step_id === 2
-                                    ? "Surveillance 1"
-                                    : project.project_step_id === 3
-                                    ? "Surveillance 2"
-                                    : project.project_step_id === 4
-                                    ? "Surveillance 3"
-                                    : project.project_step_id === 5
-                                    ? "Surveillance 4"
-                                    : project.project_step_id === 6
-                                    ? "Surveillance 5"
-                                    : null}
+                                      ? "Surveillance 1"
+                                      : project.project_step_id === 3
+                                        ? "Surveillance 2"
+                                        : project.project_step_id === 4
+                                          ? "Surveillance 3"
+                                          : project.project_step_id === 5
+                                            ? "Surveillance 4"
+                                            : project.project_step_id === 6
+                                              ? "Surveillance 5"
+                                              : null}
                                 </Typography>
                               </ListItemSecondaryAction>
                             </ListItem>
