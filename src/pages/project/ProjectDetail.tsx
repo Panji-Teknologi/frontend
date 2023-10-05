@@ -95,7 +95,7 @@ const ProjectDetail = () => {
           loading
         ) : (
           <>
-            {handle_by == 1 ? (
+            {handle_by == 2 ? (
               <div>
                 <Switch
                   {...label}
