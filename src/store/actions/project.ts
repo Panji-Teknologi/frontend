@@ -53,9 +53,11 @@ const getProjectDetail = createAsyncThunk(
     { token, tokenUserId, contract }: ProjectDetail,
     { rejectWithValue }
   ) => {
+    const body = { associate_id: tokenUserId, contract_number: contract };
     try {
-      const response = await Axios.get(
-        `${API_URL}/get_project_by_contract_number/${tokenUserId}&${contract}`,
+      const response = await Axios.post(
+        `${API_URL}/get_project_by_contract_number`,
+        body,
         {
           headers: {
             "Content-Type": "application/json",
@@ -79,12 +81,7 @@ const getProjectDetail = createAsyncThunk(
 const handleByProject = createAsyncThunk(
   "project/handle-project",
   async (
-    {
-      token,
-      associate_id,
-      project_id,
-      handle_by,
-    }: HandleBy,
+    { token, associate_id, project_id, handle_by }: HandleBy,
     { rejectWithValue }
   ) => {
     try {

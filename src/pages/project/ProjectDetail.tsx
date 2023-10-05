@@ -95,7 +95,7 @@ const ProjectDetail = () => {
           loading
         ) : (
           <>
-            {handle_by == 1 ? (
+            {handle_by == 2 ? (
               <div>
                 <Switch
                   {...label}
@@ -147,6 +147,8 @@ const ProjectDetail = () => {
           colorClass = "red";
         } else if (diffInMonths === 2 || diffInMonths === 3) {
           colorClass = "orange";
+        } else if ( currentDate.isAfter(expirationDate)) {
+          colorClass = "grey";
         } else {
           colorClass = "green";
         }
