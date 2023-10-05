@@ -16,8 +16,9 @@ interface RegisterType {
   ktp_image: File | any;
   create_date: Date | any;
   term_of_service_signature: string;
-  master_sales_employee_id: string;
+  master_sales_employee_id?: string;
   sumber_informasi: string;
+  other_sumber_informasi?: string
 }
 
 interface LoginType {
@@ -52,6 +53,7 @@ const register = createAsyncThunk(
       term_of_service_signature,
       master_sales_employee_id,
       sumber_informasi,
+      other_sumber_informasi
     }: RegisterType,
     { rejectWithValue }
   ) => {
@@ -69,8 +71,14 @@ const register = createAsyncThunk(
       formData.append("ktp_image", ktp_image);
       formData.append("create_date", create_date);
       formData.append("term_of_service_signature", term_of_service_signature);
-      formData.append("master_sales_employee_id", master_sales_employee_id);
       formData.append("sumber_informasi", sumber_informasi);
+
+      if (master_sales_employee_id !== undefined) {
+        formData.append("master_sales_employee_id", master_sales_employee_id);
+      }
+      if (other_sumber_informasi !== undefined) {
+        formData.append("other_sumber_informasi", other_sumber_informasi);
+      }
 
       await Axios.post(`${API_URL}/register_associate`, formData, {
         headers: {

@@ -33,11 +33,12 @@ import dayjs from 'dayjs';
 import AnimateButton from '../../../components/@extended/AnimateButton';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { register } from '../../../store/actions/auth';
-import { getBankDestination } from '../../../store/actions/bank';
+import { getBankDestination, getSalesMaster } from '../../../store/actions/bank';
 import { FileSize } from '../../../utils/file-size';
 import { REGISTER_FULFILLED, REGISTER_REJECTED } from '../../../store/types';
 
 import './styles.modules.css'
+import { Sales } from '../../../store/reducers/bank';
 
 type FileEvent = ChangeEvent<HTMLInputElement> & {
   target: EventTarget & { files: FileList };
@@ -60,7 +61,7 @@ const VisuallyHiddenInput = styled('input')`
 const AuthRegister = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { banks } = useAppSelector((state: any) => state.bank);
+  const { banks, sales } = useAppSelector((state: any) => state.bank);
   const { loading } = useAppSelector((state: any) => state.auth);
 
   const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"]
@@ -70,27 +71,49 @@ const AuthRegister = () => {
 
   useEffect(() => {
     dispatch(getBankDestination())
+    dispatch(getSalesMaster())
   }, []);
 
   const handleResetSign = () => {
     sign.clear();
   }
 
+  interface Values {
+    name: string
+    email: string
+    address: string
+    job: string
+    no_hp: string
+    bank_code: string
+    bank_atas_nama: string
+    no_rek_associate: string
+    master_sales_employee_id?: string
+    sumber_informasi: string
+    other_sumber_informasi?: string
+    submit: null,
+    ktp_image: null,
+  }
+
+  const initialValues: Values = {
+    name: '',
+    email: '',
+    address: '',
+    job: '',
+    no_hp: '',
+    bank_code: '',
+    bank_atas_nama: '',
+    no_rek_associate: '',
+    master_sales_employee_id: '',
+    sumber_informasi: '0',
+    other_sumber_informasi: '',
+    submit: null,
+    ktp_image: null,
+  }
+
   return (
     <>
       <Formik
-        initialValues={{
-          name: '',
-          email: '',
-          address: '',
-          job: '',
-          no_hp: '',
-          bank_code: '',
-          bank_atas_nama: '',
-          no_rek_associate: '',
-          submit: null,
-          ktp_image: null,
-        }}
+        initialValues={initialValues}
         validationSchema={Yup.object().shape({
           name: Yup.string().max(255).required('Name is required'),
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -102,6 +125,8 @@ const AuthRegister = () => {
 
             return indexOfFirst === 0
           }),
+          master_sales_employee_id: Yup.string().required("Sales is required"),
+          other_sumber_informasi: Yup.string().optional(),
           ktp_image: Yup.mixed().required('Please upload an image').test(
             "FILE_SIZE",
             "Uploaded file is too big",
@@ -128,9 +153,22 @@ const AuthRegister = () => {
               ktp_image: values.ktp_image,
               create_date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
               term_of_service_signature: toBase64,
-              master_sales_employee_id: '1',
-              sumber_informasi: '0'
+              master_sales_employee_id: values.master_sales_employee_id,
+              sumber_informasi: values.sumber_informasi,
+              other_sumber_informasi: values.other_sumber_informasi
             };
+
+            if (values.sumber_informasi === '0' || values.sumber_informasi === '1') {
+              delete data.other_sumber_informasi;
+            }
+
+            if (values.sumber_informasi === '1' || values.sumber_informasi === '2') {
+              delete data.master_sales_employee_id
+            }
+
+            // 0 = sales => sales master id
+            // 1 = individu => sumber_informasi = 1
+            // 2 = other => input other_sumber_informasi
 
             const response = await dispatch(register(data))
 
@@ -165,7 +203,7 @@ const AuthRegister = () => {
                   <InputLabel htmlFor="name-signup">Name*</InputLabel>
                   <OutlinedInput
                     id="name-login"
-                    type="name"
+                    type="text"
                     value={values.name}
                     name="name"
                     onBlur={handleBlur}
@@ -234,7 +272,7 @@ const AuthRegister = () => {
                     fullWidth
                     error={Boolean(touched.job && errors.job)}
                     id="job-signup"
-                    type="job"
+                    type="text"
                     value={values.job}
                     name="job"
                     onBlur={handleBlur}
@@ -282,6 +320,11 @@ const AuthRegister = () => {
                     ))}
                   </Select>
                 </Stack>
+                {touched.bank_code && errors.bank_code && (
+                  <FormHelperText error id="helper-text-bank_code-signup">
+                    {errors.bank_code}
+                  </FormHelperText>
+                )}
               </Grid>
               {/* ============ Bank Name ============ */}
               <Grid item xs={12} md={6}>
@@ -291,7 +334,7 @@ const AuthRegister = () => {
                     fullWidth
                     error={Boolean(touched.bank_atas_nama && errors.bank_atas_nama)}
                     id="bank_atas_nama-signup"
-                    type="phone"
+                    type="text"
                     value={values.bank_atas_nama}
                     name="bank_atas_nama"
                     onBlur={handleBlur}
@@ -313,7 +356,7 @@ const AuthRegister = () => {
                     fullWidth
                     error={Boolean(touched.no_rek_associate && errors.no_rek_associate)}
                     id="no_rek_associate-signup"
-                    type="phone"
+                    type="text"
                     value={values.no_rek_associate}
                     name="no_rek_associate"
                     onBlur={handleBlur}
@@ -327,6 +370,71 @@ const AuthRegister = () => {
                   )}
                 </Stack>
               </Grid>
+              {/* ============ Sumber Informasi ============ */}
+              <Grid item xs={12} md={values.sumber_informasi === '1' ? 12 : 6}>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="sumber_informasi-signup">Resources Info</InputLabel>
+                  <Select name="sumber_informasi" labelId='sumber_informasi-signup' value={values.sumber_informasi} label="Resources" onChange={handleChange} onBlur={(handleBlur)}>
+                    <MenuItem value="0">
+                      Sales
+                    </MenuItem>
+                    <MenuItem value="1">
+                      Individu
+                    </MenuItem>
+                    <MenuItem value="2">
+                      Other
+                    </MenuItem>
+                  </Select>
+                </Stack>
+                {touched.sumber_informasi && errors.sumber_informasi && (
+                  <FormHelperText error id="helper-text-sumber_informasi-signup">
+                    {errors.sumber_informasi}
+                  </FormHelperText>
+                )}
+              </Grid>
+              {/* ============ Sales Master ============ */}
+              {values.sumber_informasi === '0' && (
+                <Grid item xs={12} md={6}>
+                  <Stack spacing={1}>
+                    <InputLabel htmlFor="master_sales_employee_id-signup">Sales Name</InputLabel>
+                    <Select name="master_sales_employee_id" labelId='master_sales_employee_id-signup' value={values.master_sales_employee_id} label="Sales" onChange={handleChange} onBlur={(handleBlur)}>
+                      {sales?.map((sales: Sales) => (
+                        <MenuItem key={sales.master_sales_employee_id} value={sales.master_sales_employee_id}>
+                          {sales.sales_name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Stack>
+                  {touched.master_sales_employee_id && errors.master_sales_employee_id && (
+                    <FormHelperText error id="helper-text-master_sales_employee_id-signup">
+                      {errors.master_sales_employee_id}
+                    </FormHelperText>
+                  )}
+                </Grid>
+              )}
+              {values.sumber_informasi === '2' && (
+                <Grid item xs={12} md={6}>
+                  <Stack spacing={1}>
+                    <InputLabel htmlFor="other_sumber_informasi-signup">Other</InputLabel>
+                    <OutlinedInput
+                      fullWidth
+                      error={Boolean(touched.other_sumber_informasi && errors.other_sumber_informasi)}
+                      id="other_sumber_informasi-signup"
+                      type="phone"
+                      value={values.other_sumber_informasi}
+                      name="other_sumber_informasi"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Insert a name..."
+                    />
+                  </Stack>
+                  {touched.other_sumber_informasi && errors.other_sumber_informasi && (
+                    <FormHelperText error id="helper-text-other_sumber_informasi-signup">
+                      {errors.other_sumber_informasi}
+                    </FormHelperText>
+                  )}
+                </Grid>
+              )}
               {/* ============ Upload KTP Image ============ */}
               <Grid item xs={12}>
                 <Stack spacing={1}>
