@@ -35,7 +35,7 @@ const ProjectDetail = () => {
   const theme = useTheme<any>();
   const { userId } = useParams();
   const [searchParasm] = useSearchParams();
-  const contract = searchParasm.get('contract_id') as string
+  const contract = searchParasm.get("contract_id") as string;
   const matchDownMD = useMediaQuery((theme: any) =>
     theme.breakpoints.down("md")
   );
@@ -56,8 +56,6 @@ const ProjectDetail = () => {
     const [loading, setLoading] = useState<string>();
 
     const handleToggle = () => {
-      console.log(handle_by, "handle by");
-
       if (userId !== undefined && contract !== undefined) {
         dispatch(
           getProjectDetail({ token, tokenUserId: Number(userId), contract })
@@ -84,10 +82,6 @@ const ProjectDetail = () => {
         );
       }
     };
-
-    // useEffect(() => {
-    //   sethandle_by(item.handle_by);
-    // }, [item.handle_by]);
 
     return (
       <>
@@ -140,18 +134,32 @@ const ProjectDetail = () => {
       {projectDetail?.map((project: ProjectDetail, i: number) => {
         const currentDate = dayjs();
         const expirationDate = dayjs(project.expired_date);
-        const diffInMonths = currentDate.diff(expirationDate, "month");
-        let colorClass = "";
+        const selisihBulan = expirationDate.diff(currentDate, "month");
+        const totalSelisihBulan = Math.abs(selisihBulan);
 
-        if (diffInMonths === 0 || diffInMonths === 1) {
-          colorClass = "red";
-        } else if (diffInMonths === 2 || diffInMonths === 3) {
-          colorClass = "orange";
-        } else if ( currentDate.isAfter(expirationDate)) {
+        let colorClass = "";
+        if (currentDate.isAfter(expirationDate)) {
           colorClass = "grey";
+        } else if (totalSelisihBulan <= 1) {
+          colorClass = "red";
+        } else if (totalSelisihBulan <= 2 && totalSelisihBulan > 1) {
+          colorClass = "orange";
         } else {
           colorClass = "green";
         }
+
+        // if (
+        //   currentDate.isAfter(expirationDateMinusOneMonth) &&
+        //   currentDate.isBefore(expirationDate)
+        // ) {
+        //   colorClass = "red";
+        // } else if (diffInMonths === 2 || diffInMonths === 3) {
+        //   colorClass = "orange";
+        // } else if (currentDate.isAfter(expirationDate)) {
+        //   colorClass = "grey";
+        // } else {
+        //   colorClass = "green";
+        // }
 
         return (
           <MainCard key={i} sx={{ mb: 2 }}>
@@ -216,16 +224,16 @@ const ProjectDetail = () => {
                                   {project.project_step_id === 1
                                     ? "Initial Audit"
                                     : project.project_step_id === 2
-                                      ? "Surveillance 1"
-                                      : project.project_step_id === 3
-                                        ? "Surveillance 2"
-                                        : project.project_step_id === 4
-                                          ? "Surveillance 3"
-                                          : project.project_step_id === 5
-                                            ? "Surveillance 4"
-                                            : project.project_step_id === 6
-                                              ? "Surveillance 5"
-                                              : null}
+                                    ? "Surveillance 1"
+                                    : project.project_step_id === 3
+                                    ? "Surveillance 2"
+                                    : project.project_step_id === 4
+                                    ? "Surveillance 3"
+                                    : project.project_step_id === 5
+                                    ? "Surveillance 4"
+                                    : project.project_step_id === 6
+                                    ? "Surveillance 5"
+                                    : null}
                                 </Typography>
                               </ListItemSecondaryAction>
                             </ListItem>
