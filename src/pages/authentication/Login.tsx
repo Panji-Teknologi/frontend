@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Stack, Typography } from '@mui/material';
 
 // project import
-import AuthLogin from './auth-forms/AuthNoOTP';
+import AuthLogin from './auth-forms/AuthLogin';
 import AuthWrapper from './AuthWrapper';
 
 // ================================|| LOGIN ||================================ //
