@@ -6,6 +6,7 @@ import { API_URL } from "../../constants/data";
 interface ProjectByAssociate {
   token: string;
   tokenUserId: number | null;
+  year: string;
 }
 
 interface ProjectDetail {
@@ -23,10 +24,10 @@ interface HandleBy {
 
 const getProjectByAssociate = createAsyncThunk(
   "project/by-associate",
-  async ({ token, tokenUserId }: ProjectByAssociate, { rejectWithValue }) => {
+  async ({ token, tokenUserId, year }: ProjectByAssociate, { rejectWithValue }) => {
     try {
       const response = await Axios.get(
-        `${API_URL}/get_project_by_associate_id_distinct/${tokenUserId}`,
+        `${API_URL}/get_project_by_associate_id_distinct/${tokenUserId}&${year}`,
         {
           headers: {
             "Content-Type": "application/json",

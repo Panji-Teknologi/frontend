@@ -3,12 +3,13 @@ import { Box, Grid, Typography, Stack } from '@mui/material';
 
 // project import
 // import AnalyticCard from '../../components/cards/statistics/AnalyticCard';
-import MainCard from '../../components/MainCard';
-import { useAppSelector } from '../../store';
-import BarChartContract from './BarChartContract';
-import idrFormat from '../../utils/idrFormat';
-import EmptyUserCard from '../../components/cards/EmptyUserCard';
-import PieChartContract from './PieChartContract';
+import MainCard from '../components/MainCard';
+import { useAppSelector } from '../store';
+import idrFormat from '../utils/idrFormat';
+import EmptyUserCard from '../components/cards/EmptyUserCard';
+import BarChartContract from '../sections/dashboard/BarChartContract';
+import PieChartContract from '../sections/dashboard/PieChartContract';
+import FilterBarChart from '../sections/dashboard/FilterBarChart';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
@@ -23,7 +24,7 @@ const Dashboard = () => {
   return profiles?.is_valid === 1 ? (
     <Grid container spacing={2.5} pb={5}>
       {/* row 1 */}
-      <Grid item xs={12} sx={{ mb: -2.25 }}>
+      <Grid item xs={12} sx={{ mb: 1 }}>
         <Typography variant="h5">Dashboard</Typography>
       </Grid>
       {/* <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -39,13 +40,9 @@ const Dashboard = () => {
         <AnalyticCard title="Total Sales" count="$35,078" percentage={9.9} isLoss color="warning" extra="$20,395" />
       </Grid> */}
 
-      <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
-
       {/* row 2 */}
       <Grid item xs={12} md={7} lg={8}>
-        {/* <Grid item>
-          <Typography variant="h5">Contract Overview</Typography>
-        </Grid> */}
+        <FilterBarChart />
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ p: 3, pb: 0 }}>
             <Stack spacing={2}>
@@ -59,6 +56,9 @@ const Dashboard = () => {
         </MainCard>
       </Grid>
       <Grid item xs={12} md={5} lg={4}>
+        <Grid item>
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>Contract Overview</Typography>
+        </Grid>
         <PieChartContract priceContract={priceContract} companyNames={companyNames} totalPrice={totalPrice} />
       </Grid>
     </Grid>

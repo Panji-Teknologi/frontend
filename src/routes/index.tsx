@@ -14,7 +14,7 @@ const AuthPhone = Loadable(lazy(() => import('../pages/authentication/Register')
 
 const Dashboard = Loadable(lazy(() => import('../pages/dashboard')));
 const Project = Loadable(lazy(() => import('../pages/project')));
-const ProjectDetail = Loadable(lazy(() => import('../pages/project/ProjectDetail')));
+const ProjectDetail = Loadable(lazy(() => import('../sections/project/ProjectDetail')));
 const Profile = Loadable(lazy(() => import('../pages/profile')));
 
 // ==============================|| ROUTING RENDER ||============================== //

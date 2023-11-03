@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useSignOut } from "react-auth-kit";
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, IconButton, Slide, Toolbar, useMediaQuery, Link } from '@mui/material';
+
+// third-party
+import dayjs from 'dayjs';
+import { useSignOut } from "react-auth-kit";
 
 // project import
 import Drawer from './Drawer';
@@ -32,6 +35,7 @@ const MainLayout = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const signOut = useSignOut();
+  const year = String(dayjs().year());
   const theme = useTheme<any>();
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownXS = useMediaQuery(theme.breakpoints.down(512));
@@ -52,7 +56,7 @@ const MainLayout = () => {
     if (tokenUserId !== null) {
       async function init() {
         const responseUser = await dispatch(getUserById({ token, tokenUserId }))
-        const responseProject = await dispatch(getProjectByAssociate({ token, tokenUserId }))
+        const responseProject = await dispatch(getProjectByAssociate({ token, tokenUserId, year }))
 
         if (responseUser.type === GET_USER_REJECTED && responseProject.type === GET_PROJECTS_REJECTED) {
           signOut();
