@@ -15,6 +15,7 @@ import {
 
 // third party
 import * as Yup from 'yup';
+import dayjs from 'dayjs';
 import { Formik } from 'formik';
 import { toast } from 'react-hot-toast';
 import { useSignIn } from 'react-auth-kit';
@@ -37,6 +38,7 @@ const AuthLogin = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const signIn = useSignIn();
+  const year = String(dayjs().year());
   const { loading } = useAppSelector((state: any) => state.auth);
 
   const [response, setResponse] = useState<any>(null);
@@ -125,7 +127,7 @@ const AuthLogin = () => {
                 });
 
                 dispatch(getUserById({ token, tokenUserId }))
-                dispatch(getProjectByAssociate({ token, tokenUserId }))
+                dispatch(getProjectByAssociate({ token, tokenUserId, year }))
 
                 // navigate to dashboard page
                 navigate('/dashboard');

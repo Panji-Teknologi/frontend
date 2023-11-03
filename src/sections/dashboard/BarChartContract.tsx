@@ -85,7 +85,7 @@ const BarChartContract = ({ priceContract, companyNames }: BarChartContractProps
 	return (
 		<Box id="chart" sx={{ bgcolor: 'transparent' }}>
 			{companyNames.length === 0 && priceContract.length === 0 ? (
-				<Box>
+				<Box display='flex' justifyContent='center' alignItems='center' p={2}>
 					No Data
 				</Box>
 			) : (

@@ -16,10 +16,10 @@ import {
 import dayjs from 'dayjs';
 
 // project import
-import MainCard from '../../components/MainCard'
-import PersonalInfo from './PersonalInfo';
+import MainCard from '../components/MainCard'
+import PersonalInfo from '../sections/profile/PersonalInfo';
 
-import { useAppSelector } from '../../store';
+import { useAppSelector } from '../store';
 
 // assets
 import { CalendarOutlined } from '@ant-design/icons';

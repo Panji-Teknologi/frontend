@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { Box, Typography, OutlinedInput, Grid, Slide } from "@mui/material"
 
 // project import
-import { useAppDispatch, useAppSelector } from '../../store';
-import { getProjectByAssociate } from '../../store/actions/project';
-import { getUserIdFromToken } from '../../utils/decode-token';
-import useCookie from '../../hooks/useCookie';
+import { useAppDispatch, useAppSelector } from '../store';
+import { getProjectByAssociate } from '../store/actions/project';
+import { getUserIdFromToken } from '../utils/decode-token';
+import useCookie from '../hooks/useCookie';
 
 // assets
 import { SearchOutlined } from '@ant-design/icons';
-import CardProject from '../../components/cards/CardProject';
-import EmptyUserCard from '../../components/cards/EmptyUserCard';
-import { ProjectType } from '../../types';
+import CardProject from '../components/cards/CardProject';
+import EmptyUserCard from '../components/cards/EmptyUserCard';
+import { ProjectType } from '../types';
 
 // ==============================|| HISTTORY ||============================== //
 

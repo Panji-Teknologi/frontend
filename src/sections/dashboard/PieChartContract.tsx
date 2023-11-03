@@ -133,7 +133,7 @@ const PieChartContract = ({ priceContract, companyNames, totalPrice }: PieChartC
                 <Grid item xs sx={DotSize}>
                   <Dot color={colors[i]} size={12} />
                   <Typography align="left" variant="subtitle1" color="textSecondary">
-                    {project?.client_company_name} ({Number(percent.toFixed(2))}%)
+                    {project?.client_company_name} ({isNaN(percent) ? 0 : Number(percent.toFixed(2))}%)
                   </Typography>
                 </Grid>
                 <Grid item sx={ExpenseSize}>
